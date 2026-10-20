@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+.root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --font-family: 'Helvetica Neue', sans-serif;
+  --font-size: 16px;
+  --line-height: 1.5;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  background-color: var(--secondary-color);
+  padding: 0.5rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+}
+
+li {
+  list-style: none;
+}
