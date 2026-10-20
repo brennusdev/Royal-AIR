@@ -3,33 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
+    <meta name="theme-color" content="#10264a">
+    <title>Início | ROYAL AIR</title>
+    <link rel="stylesheet" href="../Frontend/style.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="Inicio.html">Início</a></li>
-                <li><a href="Sobre.html">Sobre</a></li>
-                <li><a href="Servicos.html">Serviços</a></li>
-                <li><a href="MeuDrop.html">Meu Drop</a></li>
-                <li><a href="MeusSkills.html">Meus Skills</a></li>
-                <li><a href="Desenvolvimento.html">Desenvolvimento</a></li>
-                <li><a href="Links.html">Manutenção</a></li>
-                <li><a href="Contato.html">Contato</a></li>
-            </ul>
+<body class="site-page">
+    <div class="ambient ambient--blue" aria-hidden="true"></div>
+    <div class="ambient ambient--gold" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <a class="brand" href="Inicio.html" aria-label="ROYAL AIR, início">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M24 5 29 18 43 23 29 28 24 43 19 28 5 23 19 18 24 5Z" />
+                    <circle cx="24" cy="23" r="4" />
+                </svg>
+            </span>
+            <span>ROYAL <span class="brand-accent">AIR</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Navegação principal">
+            <a href="Inicio.html" aria-current="page">Início</a>
+            <a href="Sobre.html">Sobre</a>
+            <a href="Servicos.html">Serviços</a>
+            <a href="MeuDrop.html">Meu Drop</a>
         </nav>
+        <a class="header-login" href="index.html">Entrar <span aria-hidden="true">→</span></a>
     </header>
 
-    <h1>Bem-vindo ao ROYAL AIR!</h1>
-    <p>Aqui você encontrará o seu drop perfeito para estudo.</p>
+    <main class="site-main">
+        <section class="site-hero">
+            <p class="eyebrow"><span></span> SEU PRÓXIMO NÍVEL COMEÇA AQUI</p>
+            <h1>Bem-vindo ao<br>ROYAL <span>AIR.</span></h1>
+            <p class="site-lead">Encontre seu próximo drop de conhecimento e dê mais altitude aos seus estudos.</p>
+            <a class="submit-button site-cta" href="MeuDrop.html">
+                <span>Explorar meu drop</span>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+            </a>
+        </section>
 
-    <h2>Serviços</h2>
-    <ul>
-        <li>Meu Drop</li>
-        <li>Desenvolvimento</li>
-        <li>Meus Skills</li>
-        <li>Manutenção</li>
-    </ul>
+        <section class="feature-grid" aria-label="Explore a plataforma">
+            <a class="feature-card" href="MeuDrop.html">
+                <span class="feature-number">01</span>
+                <h2>Meu Drop</h2>
+                <p>Um espaço para organizar e acompanhar seus materiais de estudo.</p>
+                <span class="feature-link">Conhecer <span aria-hidden="true">→</span></span>
+            </a>
+            <a class="feature-card" href="Servicos.html">
+                <span class="feature-number">02</span>
+                <h2>Serviços</h2>
+                <p>Descubra os recursos pensados para apoiar sua jornada.</p>
+                <span class="feature-link">Explorar <span aria-hidden="true">→</span></span>
+            </a>
+            <a class="feature-card" href="Sobre.html">
+                <span class="feature-number">03</span>
+                <h2>Sobre o projeto</h2>
+                <p>Conheça a ideia por trás do ROYAL AIR e seus objetivos.</p>
+                <span class="feature-link">Saiba mais <span aria-hidden="true">→</span></span>
+            </a>
+        </section>
+        <footer class="site-footer">ESTUDE. EXPLORE. DECOLE.</footer>
+    </main>
 </body>
 </html>
