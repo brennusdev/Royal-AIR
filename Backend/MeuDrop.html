@@ -3,10 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Drop</title>
+    <meta name="theme-color" content="#10264a">
+    <title>Meu Drop | ROYAL AIR</title>
+    <link rel="stylesheet" href="../Frontend/style.css">
 </head>
-<body>
-    <h1>Meu Drop</h1>
-    <p>Bem-vindo ao Meu Drop! Aqui você pode armazenar e gerenciar seus drops de estudo.</p>
+<body class="site-page">
+    <div class="ambient ambient--blue" aria-hidden="true"></div>
+    <div class="ambient ambient--gold" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <a class="brand" href="Inicio.html" aria-label="ROYAL AIR, início">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M24 5 29 18 43 23 29 28 24 43 19 28 5 23 19 18 24 5Z" />
+                    <circle cx="24" cy="23" r="4" />
+                </svg>
+            </span>
+            <span>ROYAL <span class="brand-accent">AIR</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Navegação principal">
+            <a href="Inicio.html">Início</a>
+            <a href="Sobre.html">Sobre</a>
+            <a href="Servicos.html">Serviços</a>
+            <a href="MeuDrop.html" aria-current="page">Meu Drop</a>
+        </nav>
+        <a class="header-login" href="index.html">Entrar <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main class="site-main">
+        <section class="content-card drop-card">
+            <p class="eyebrow"><span></span> SEU ESPAÇO DE ESTUDO</p>
+            <h1>Meu <span>Drop.</span></h1>
+            <p class="site-lead">Um espaço para reunir, organizar e revisitar seus materiais de estudo.</p>
+            <div class="drop-empty">
+                <span class="drop-empty-icon" aria-hidden="true">✦</span>
+                <h2>Seu próximo drop começa aqui</h2>
+                <p>A área de gerenciamento de materiais está em desenvolvimento. Em breve, você poderá acompanhar seus drops por aqui.</p>
+                <a class="inline-link" href="Servicos.html">Explorar os serviços <span aria-hidden="true">→</span></a>
+            </div>
+        </section>
+        <footer class="site-footer">ESTUDE. EXPLORE. DECOLE.</footer>
+    </main>
 </body>
 </html>
