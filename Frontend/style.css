@@ -532,6 +532,18 @@ a {
   font-weight: 650;
 }
 
+.auth-view:not([hidden]) {
+  animation: copy-enter 320ms ease both;
+}
+
+.signup-field-label {
+  margin-top: 14px;
+}
+
+.signup-submit {
+  margin-top: 22px;
+}
+
 .demo-note {
   margin: 31px 0 0;
   color: #718097;
