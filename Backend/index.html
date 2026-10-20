@@ -42,82 +42,189 @@
 
         <section class="form-panel" aria-labelledby="login-title">
             <div class="login-card">
-                <div class="card-heading">
-                    <span class="welcome-tag">BEM-VINDO DE VOLTA</span>
-                    <h2 id="login-title">Acesse sua conta</h2>
-                    <p>Entre com seus dados para continuar.</p>
-                </div>
-
-                <form id="login-form">
-                    <label class="field-label" for="email">E-mail</label>
-                    <div class="input-wrap">
-                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <rect x="3.5" y="5" width="17" height="14" rx="3" />
-                            <path d="m5 7 7 5 7-5" />
-                        </svg>
-                        <input id="email" name="email" type="email" autocomplete="username" placeholder="voce@email.com" required>
+                <div class="auth-view" id="login-view">
+                    <div class="card-heading">
+                        <span class="welcome-tag">BEM-VINDO DE VOLTA</span>
+                        <h2 id="login-title">Acesse sua conta</h2>
+                        <p>Entre com seus dados para continuar.</p>
                     </div>
 
-                    <div class="password-heading">
-                        <label class="field-label" for="password">Senha</label>
-                        <a class="text-link" href="#recovery" id="recovery-link">Esqueceu a senha?</a>
-                    </div>
-                    <div class="input-wrap">
-                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <rect x="4" y="10" width="16" height="11" rx="2.5" />
-                            <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2" />
-                        </svg>
-                        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required minlength="6">
-                        <button class="password-toggle" type="button" id="password-toggle" aria-label="Mostrar senha" aria-pressed="false">
+                    <form id="login-form">
+                        <label class="field-label" for="email">E-mail</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="3.5" y="5" width="17" height="14" rx="3" />
+                                <path d="m5 7 7 5 7-5" />
+                            </svg>
+                            <input id="email" name="email" type="email" autocomplete="username" placeholder="voce@email.com" required>
+                        </div>
+
+                        <div class="password-heading">
+                            <label class="field-label" for="password">Senha</label>
+                            <a class="text-link" href="#recovery" id="recovery-link">Esqueceu a senha?</a>
+                        </div>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="4" y="10" width="16" height="11" rx="2.5" />
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2" />
+                            </svg>
+                            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required minlength="6">
+                            <button class="password-toggle" type="button" data-password-toggle="password" aria-label="Mostrar senha" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                                    <circle cx="12" cy="12" r="2.5" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-option">
+                                <input type="checkbox" name="remember">
+                                <span class="custom-checkbox" aria-hidden="true"></span>
+                                <span>Manter conectado</span>
+                            </label>
+                        </div>
+
+                        <button class="submit-button" type="submit">
+                            <span class="button-label">Entrar na minha conta</span>
                             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
-                                <circle cx="12" cy="12" r="2.5" />
+                                <path d="M5 12h14m-6-6 6 6-6 6" />
                             </svg>
                         </button>
+                        <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
+                    </form>
+
+                    <p class="signup-prompt">Ainda não tem uma conta? <a class="text-link" href="#cadastro" id="signup-link">Cadastre-se</a></p>
+                    <p class="demo-note">Ambiente de demonstração · autenticação não configurada</p>
+                </div>
+
+                <div class="auth-view" id="signup-view" hidden>
+                    <div class="card-heading">
+                        <span class="welcome-tag">JUNTE-SE À JORNADA</span>
+                        <h2 id="signup-title">Crie sua conta</h2>
+                        <p>Preencha seus dados para começar.</p>
                     </div>
 
-                    <div class="form-options">
-                        <label class="remember-option">
-                            <input type="checkbox" name="remember">
-                            <span class="custom-checkbox" aria-hidden="true"></span>
-                            <span>Manter conectado</span>
-                        </label>
-                    </div>
+                    <form id="signup-form">
+                        <label class="field-label" for="signup-name">Nome completo</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="8" r="3.5" />
+                                <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+                            </svg>
+                            <input id="signup-name" name="name" type="text" autocomplete="name" placeholder="Seu nome" required minlength="2">
+                        </div>
 
-                    <button class="submit-button" type="submit">
-                        <span class="button-label">Entrar na minha conta</span>
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M5 12h14m-6-6 6 6-6 6" />
-                        </svg>
-                    </button>
-                    <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
-                </form>
+                        <label class="field-label signup-field-label" for="signup-email">E-mail</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="3.5" y="5" width="17" height="14" rx="3" />
+                                <path d="m5 7 7 5 7-5" />
+                            </svg>
+                            <input id="signup-email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+                        </div>
 
-                <p class="signup-prompt">Ainda não tem uma conta? <a class="text-link" href="#cadastro" id="signup-link">Cadastre-se</a></p>
-                <p class="demo-note">Ambiente de demonstração · autenticação não configurada</p>
+                        <label class="field-label signup-field-label" for="signup-password">Senha</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="4" y="10" width="16" height="11" rx="2.5" />
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2" />
+                            </svg>
+                            <input id="signup-password" name="password" type="password" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" required minlength="8">
+                            <button class="password-toggle" type="button" data-password-toggle="signup-password" aria-label="Mostrar senha" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                                    <circle cx="12" cy="12" r="2.5" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <label class="field-label signup-field-label" for="signup-confirm-password">Confirmar senha</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="4" y="10" width="16" height="11" rx="2.5" />
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2" />
+                            </svg>
+                            <input id="signup-confirm-password" name="confirm-password" type="password" autocomplete="new-password" placeholder="Digite a senha novamente" required minlength="8">
+                            <button class="password-toggle" type="button" data-password-toggle="signup-confirm-password" aria-label="Mostrar confirmação de senha" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
+                                    <circle cx="12" cy="12" r="2.5" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <button class="submit-button signup-submit" type="submit">
+                            <span class="button-label">Criar minha conta</span>
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h14m-6-6 6 6-6 6" />
+                            </svg>
+                        </button>
+                        <p class="form-message" id="signup-message" role="status" aria-live="polite"></p>
+                    </form>
+
+                    <p class="signup-prompt">Já tem uma conta? <a class="text-link" href="#entrar" id="login-link">Entrar</a></p>
+                    <p class="demo-note">Cadastro demonstrativo · nenhuma conta será criada</p>
+                </div>
             </div>
         </section>
     </main>
 
     <script>
-        const form = document.querySelector("#login-form");
-        const passwordInput = document.querySelector("#password");
-        const passwordToggle = document.querySelector("#password-toggle");
-        const message = document.querySelector("#form-message");
-        const submitButton = form.querySelector(".submit-button");
-        const buttonLabel = submitButton.querySelector(".button-label");
+        const loginView = document.querySelector("#login-view");
+        const signupView = document.querySelector("#signup-view");
+        const loginForm = document.querySelector("#login-form");
+        const signupForm = document.querySelector("#signup-form");
+        const signupPassword = document.querySelector("#signup-password");
+        const confirmPassword = document.querySelector("#signup-confirm-password");
 
-        passwordToggle.addEventListener("click", () => {
-            const isPasswordHidden = passwordInput.type === "password";
-            passwordInput.type = isPasswordHidden ? "text" : "password";
-            passwordToggle.setAttribute("aria-pressed", String(isPasswordHidden));
-            passwordToggle.setAttribute("aria-label", isPasswordHidden ? "Ocultar senha" : "Mostrar senha");
+        function showView(view) {
+            const isSignup = view === "signup";
+            loginView.hidden = isSignup;
+            signupView.hidden = !isSignup;
+            document.querySelector(".form-panel").setAttribute("aria-labelledby", isSignup ? "signup-title" : "login-title");
+            document.title = isSignup ? "Cadastro | ROYAL AIR" : "Entrar | ROYAL AIR";
+            document.querySelectorAll(".form-message").forEach((message) => {
+                message.textContent = "";
+                message.classList.remove("is-visible");
+            });
+
+            if (isSignup) {
+                document.querySelector("#signup-name").focus();
+            } else {
+                signupForm.reset();
+                confirmPassword.setCustomValidity("");
+                document.querySelector("#email").focus();
+            }
+        }
+
+        document.querySelector("#signup-link").addEventListener("click", (event) => {
+            event.preventDefault();
+            showView("signup");
         });
 
-        form.addEventListener("submit", (event) => {
+        document.querySelector("#login-link").addEventListener("click", (event) => {
             event.preventDefault();
-            if (!form.reportValidity()) return;
+            showView("login");
+        });
 
+        document.querySelectorAll("[data-password-toggle]").forEach((toggle) => {
+            toggle.addEventListener("click", () => {
+                const input = document.getElementById(toggle.dataset.passwordToggle);
+                const isPasswordHidden = input.type === "password";
+                input.type = isPasswordHidden ? "text" : "password";
+                toggle.setAttribute("aria-pressed", String(isPasswordHidden));
+                toggle.setAttribute("aria-label", isPasswordHidden ? "Ocultar senha" : "Mostrar senha");
+            });
+        });
+
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!loginForm.reportValidity()) return;
+
+            const submitButton = loginForm.querySelector(".submit-button");
+            const buttonLabel = submitButton.querySelector(".button-label");
+            const message = document.querySelector("#login-message");
             submitButton.disabled = true;
             submitButton.classList.add("is-loading");
             buttonLabel.textContent = "Validando...";
@@ -133,15 +240,46 @@
             }, 700);
         });
 
-        document.querySelector("#recovery-link").addEventListener("click", (event) => {
+        function validatePasswordMatch() {
+            confirmPassword.setCustomValidity(
+                confirmPassword.value && confirmPassword.value !== signupPassword.value
+                    ? "As senhas não correspondem."
+                    : ""
+            );
+        }
+
+        signupPassword.addEventListener("input", validatePasswordMatch);
+        confirmPassword.addEventListener("input", validatePasswordMatch);
+
+        signupForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            message.textContent = "A recuperação de senha estará disponível quando a autenticação for integrada.";
-            message.classList.add("is-visible");
+            validatePasswordMatch();
+            if (!signupForm.reportValidity()) return;
+
+            const submitButton = signupForm.querySelector(".submit-button");
+            const buttonLabel = submitButton.querySelector(".button-label");
+            const message = document.querySelector("#signup-message");
+            submitButton.disabled = true;
+            submitButton.classList.add("is-loading");
+            buttonLabel.textContent = "Validando...";
+            message.textContent = "";
+            message.classList.remove("is-visible");
+
+            window.setTimeout(() => {
+                submitButton.disabled = false;
+                submitButton.classList.remove("is-loading");
+                buttonLabel.textContent = "Criar minha conta";
+                message.textContent = "Cadastro validado para demonstração. Nenhuma conta foi criada porque a autenticação ainda não está conectada.";
+                message.classList.add("is-visible");
+                signupForm.reset();
+                confirmPassword.setCustomValidity("");
+            }, 700);
         });
 
-        document.querySelector("#signup-link").addEventListener("click", (event) => {
+        document.querySelector("#recovery-link").addEventListener("click", (event) => {
             event.preventDefault();
-            message.textContent = "O cadastro estará disponível quando a autenticação for integrada.";
+            const message = document.querySelector("#login-message");
+            message.textContent = "A recuperação de senha estará disponível quando a autenticação for integrada.";
             message.classList.add("is-visible");
         });
     </script>
