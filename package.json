@@ -1,0 +1,48 @@
+{
+  "name": "skills-evidence-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.13.0 <25",
+    "npm": ">=11"
+  },
+  "workspaces": [
+    "apps/api",
+    "apps/web",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n API,WEB -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev --workspace @platform/api",
+    "dev:web": "npm run dev --workspace @platform/web",
+    "build": "npm run build --workspace @platform/shared && npm run db:generate && npm run build --workspace @platform/api && npm run build --workspace @platform/web",
+    "lint": "eslint apps packages prisma prisma.config.ts eslint.config.js --max-warnings=0",
+    "typecheck": "npm run build --workspace @platform/shared && npm run db:generate && npm run typecheck --workspace @platform/api && npm run typecheck --workspace @platform/web && tsc -p tsconfig.prisma.json",
+    "test": "npm run build --workspace @platform/shared && vitest run",
+    "db:generate": "prisma generate",
+    "db:validate": "prisma validate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:setup": "npm run db:generate && npm run db:migrate && npm run db:seed"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "concurrently": "10.0.6",
+    "eslint": "10.13.0",
+    "globals": "16.5.0",
+    "prisma": "7.10.1",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.0",
+    "vitest": "5.0.5"
+  },
+  "allowScripts": {
+    "prisma@7.10.1": true,
+    "@prisma/engines@7.10.1": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.25.12": true
+  }
+}
