@@ -1,5 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { accountSummarySchema, type AccountSummary } from "@platform/shared";
+import LearningPathPanel from "./LearningPathPanel.js";
+import PortfolioEvidencePanel from "./PortfolioEvidencePanel.js";
 
 type FormMode = "login" | "register" | "forgot" | "reset";
 
@@ -188,8 +190,8 @@ function AuthPanel() {
         <h2>Um espaço pessoal, com privacidade por padrão.</h2>
         <p>
           O perfil começa privado. Nesta etapa, a conta registra apenas dados
-          básicos e suas preferências; trilhas, desafios e avaliações ainda
-          serão adicionados nas próximas fases.
+          básicos e suas preferências. Você também pode seguir uma primeira
+          trilha de estudo estruturada e acompanhar as etapas que marcar como estudadas.
         </p>
       </div>
 
@@ -217,6 +219,8 @@ function AuthPanel() {
               </label>
               <button className="primary-link" type="submit" disabled={busy}>Salvar perfil</button>
             </form>
+            <LearningPathPanel />
+            <PortfolioEvidencePanel />
           </>
         ) : (
           <>
