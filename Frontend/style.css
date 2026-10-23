@@ -928,6 +928,422 @@ a {
   margin-top: 10px;
 }
 
+.learning-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.learning-grid .feature-card {
+  min-height: 220px;
+  scroll-margin-top: 24px;
+}
+
+.learning-main {
+  padding-top: 42px;
+}
+
+.learning-main .page-intro {
+  padding: 16px 0 28px;
+}
+
+.learning-section {
+  margin-top: 22px;
+  padding: clamp(22px, 4vw, 36px);
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgb(16 31 53 / 94%), rgb(12 25 43 / 94%));
+  scroll-margin-top: 24px;
+}
+
+.learning-section-heading,
+.topic-heading,
+.lesson-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.learning-section-heading .eyebrow {
+  margin: 0;
+}
+
+.learning-section-heading h2 {
+  margin: 10px 0 0;
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.learning-section .section-description,
+.privacy-note {
+  max-width: 720px;
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.section-description {
+  margin: 14px 0 18px;
+}
+
+.privacy-note {
+  margin: 14px 0 0;
+  font-size: 0.74rem;
+}
+
+.learning-metrics {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric-card {
+  display: flex;
+  min-height: 108px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 22px;
+  border: 1px solid rgb(215 180 90 / 16%);
+  border-radius: 15px;
+  background: rgb(16 31 53 / 80%);
+}
+
+.metric-value {
+  color: var(--color-gold);
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.metric-label {
+  color: var(--color-muted);
+  font-size: 0.76rem;
+}
+
+.guidance-panel {
+  display: grid;
+  margin-top: 20px;
+  padding: 22px;
+  gap: 16px;
+  grid-template-columns: auto 1fr;
+  border: 1px solid rgb(215 180 90 / 22%);
+  border-radius: 14px;
+  background: rgb(5 14 27 / 34%);
+}
+
+.guidance-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgb(215 180 90 / 30%);
+  border-radius: 12px;
+  background: rgb(215 180 90 / 8%);
+  color: var(--color-gold);
+  font-size: 1.15rem;
+}
+
+.guidance-panel h3,
+.drop-form h3,
+.repository-card h3 {
+  margin: 0 0 7px;
+  font-size: 1rem;
+}
+
+.guidance-panel p,
+.repository-card p,
+.topic-empty {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+.roadmap-list {
+  display: grid;
+  margin: 16px 0 0;
+  padding-left: 20px;
+  gap: 7px;
+  color: #dce3ec;
+  font-size: 0.82rem;
+}
+
+.secondary-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid rgb(215 180 90 / 38%);
+  border-radius: 9px;
+  background: rgb(215 180 90 / 8%);
+  color: #e3c779;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 650;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.secondary-button:hover:not(:disabled) {
+  border-color: var(--color-gold);
+  background: rgb(215 180 90 / 14%);
+  color: #f1d995;
+}
+
+.secondary-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.inline-form {
+  display: flex;
+  gap: 10px;
+}
+
+.learning-main input,
+.learning-main select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid rgb(185 202 224 / 16%);
+  border-radius: 9px;
+  outline: 0;
+  background: rgb(5 14 27 / 48%);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.learning-main input:focus,
+.learning-main select:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgb(215 180 90 / 12%);
+}
+
+.learning-main input::placeholder {
+  color: #718097;
+}
+
+.learning-main select option {
+  background: #101f35;
+  color: var(--color-text);
+}
+
+.status-message {
+  display: none;
+  margin: 12px 0 0;
+  color: #e3c779;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.status-message.is-visible {
+  display: block;
+}
+
+.status-message.is-error {
+  color: #ff9aa9;
+}
+
+.app-status:not(.is-visible) {
+  display: none;
+}
+
+.repository-grid {
+  display: grid;
+  margin-top: 16px;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.repository-card,
+.topic-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 13px;
+  background: rgb(5 14 27 / 30%);
+}
+
+.repository-card h3 a {
+  color: #f1d995;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.repository-card h3 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.repository-card p {
+  min-height: 44px;
+}
+
+.repository-language {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--color-gold);
+  font-size: 0.72rem;
+}
+
+.text-button {
+  padding: 5px 0;
+  border: 0;
+  background: transparent;
+  color: #e3c779;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  text-align: left;
+}
+
+.text-button:hover {
+  color: #f1d995;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.drop-forms {
+  display: grid;
+  margin-top: 18px;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.drop-form {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 18px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 13px;
+  background: rgb(5 14 27 / 28%);
+}
+
+.drop-form h3 {
+  margin-bottom: 16px;
+}
+
+.drop-form .field-label {
+  margin: 12px 0 7px;
+}
+
+.drop-form .secondary-button {
+  align-self: flex-start;
+  margin-top: 14px;
+}
+
+.drop-form .inline-form .secondary-button {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+.topic-list {
+  display: grid;
+  margin-top: 16px;
+  gap: 14px;
+}
+
+.topic-heading {
+  margin-bottom: 12px;
+}
+
+.topic-heading h3,
+.lesson-heading h4 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.lesson-card {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid rgb(255 255 255 / 7%);
+  border-radius: 11px;
+  background: rgb(16 31 53 / 62%);
+}
+
+.video-player {
+  width: 100%;
+  margin-top: 12px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 9px;
+  background: #050e1b;
+}
+
+.video-player iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.lesson-progress {
+  display: grid;
+  margin-top: 11px;
+  gap: 7px;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.progress-bar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 10%);
+  grid-column: 1 / -1;
+}
+
+.progress-bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-gold);
+  transition: width 250ms ease;
+}
+
+.lesson-progress-label,
+.lesson-complete-label {
+  color: var(--color-muted);
+  font-size: 0.7rem;
+}
+
+.lesson-complete-label {
+  color: #a6d8b4;
+}
+
+.lesson-fallback {
+  padding-top: 8px;
+}
+
+.empty-state {
+  margin: 18px 0 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.empty-state[hidden] {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.learning-main :is(button, a, input, select):focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
 .service-grid .feature-card {
   min-height: 220px;
 }
@@ -1040,6 +1456,15 @@ a {
   .service-grid .feature-card {
     min-height: 175px;
   }
+
+  .learning-metrics,
+  .drop-forms {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card {
+    min-height: 88px;
+  }
 }
 
 @media (max-width: 420px) {
@@ -1080,5 +1505,38 @@ a {
 
   .drop-empty {
     padding: 21px;
+  }
+
+  .learning-section {
+    padding: 20px 16px;
+  }
+
+  .learning-section-heading {
+    align-items: flex-start;
+  }
+
+  .learning-section-heading .secondary-button {
+    max-width: 132px;
+    min-height: 38px;
+    padding: 0 9px;
+    font-size: 0.69rem;
+  }
+
+  .inline-form {
+    flex-direction: column;
+  }
+
+  .inline-form .secondary-button {
+    align-self: flex-start;
+  }
+
+  .repository-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guidance-panel {
+    padding: 17px;
+    gap: 12px;
+    grid-template-columns: 1fr;
   }
 }
