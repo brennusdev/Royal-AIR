@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#10264a">
+    <meta name="description" content="Organize seus estudos, acompanhe suas aulas e descubra seu próximo passo como desenvolvedor.">
     <title>Meu Drop | ROYAL AIR</title>
     <link rel="stylesheet" href="../Frontend/style.css">
 </head>
@@ -22,27 +23,126 @@
             <span>ROYAL <span class="brand-accent">AIR</span></span>
         </a>
         <nav class="site-nav" aria-label="Navegação principal">
-            <a href="Inicio.html">Início</a>
-            <a href="Sobre.html">Sobre</a>
-            <a href="Servicos.html">Serviços</a>
-            <a href="MeuDrop.html" aria-current="page">Meu Drop</a>
+            <a href="#aprender">Aprender</a>
+            <a href="#repositorios">Repositórios</a>
+            <a href="#videos">Vídeos</a>
+            <a href="#meu-drop" aria-current="page">Meu Drop</a>
         </nav>
         <a class="header-login" href="index.html">Entrar <span aria-hidden="true">→</span></a>
     </header>
 
-    <main class="site-main">
-        <section class="content-card drop-card">
-            <p class="eyebrow"><span></span> SEU ESPAÇO DE ESTUDO</p>
-            <h1>Meu <span>Drop.</span></h1>
-            <p class="site-lead">Um espaço para reunir, organizar e revisitar seus materiais de estudo.</p>
-            <div class="drop-empty">
-                <span class="drop-empty-icon" aria-hidden="true">✦</span>
-                <h2>Seu próximo drop começa aqui</h2>
-                <p>A área de gerenciamento de materiais está em desenvolvimento. Em breve, você poderá acompanhar seus drops por aqui.</p>
-                <a class="inline-link" href="Servicos.html">Explorar os serviços <span aria-hidden="true">→</span></a>
-            </div>
+    <main class="site-main learning-main">
+        <p class="status-message app-status" id="app-status" role="status" aria-live="polite"></p>
+        <section class="page-intro">
+            <p class="eyebrow"><span></span> SUA JORNADA DE DESENVOLVIMENTO</p>
+            <h1>Estude com um<br><span>norte claro.</span></h1>
+            <p class="site-lead">Organize seus estudos, acompanhe suas aulas e transforme seus projetos em próximos passos.</p>
         </section>
+
+        <section class="learning-metrics" aria-label="Suas métricas de aprendizado" aria-live="polite">
+            <article class="metric-card">
+                <span class="metric-value" id="metric-topics">0</span>
+                <span class="metric-label">trilhas de estudo</span>
+            </article>
+            <article class="metric-card">
+                <span class="metric-value" id="metric-lessons">0</span>
+                <span class="metric-label">aulas concluídas</span>
+            </article>
+            <article class="metric-card">
+                <span class="metric-value" id="metric-time">0 min</span>
+                <span class="metric-label">assistidos nesta jornada</span>
+            </article>
+        </section>
+
+        <section class="learning-section" id="aprender" aria-labelledby="learn-title">
+            <div class="learning-section-heading">
+                <div>
+                    <p class="eyebrow"><span></span> SEU PRÓXIMO PASSO</p>
+                    <h2 id="learn-title">Aprender</h2>
+                </div>
+                <button class="secondary-button" id="refresh-guidance" type="button">Atualizar meu norte</button>
+            </div>
+            <div class="guidance-panel" aria-live="polite">
+                <span class="guidance-icon" aria-hidden="true">✦</span>
+                <div>
+                    <h3 id="guidance-title">Seu orientador está pronto</h3>
+                    <p id="guidance-copy">Adicione um assunto ou conecte seu GitHub para receber uma trilha de estudos baseada na sua atividade.</p>
+                    <ol class="roadmap-list" id="guidance-roadmap"></ol>
+                </div>
+            </div>
+            <p class="privacy-note">As sugestões são geradas no seu navegador a partir dos estudos registrados e dos repositórios públicos que você consultar. Seus dados de estudo ficam salvos neste dispositivo.</p>
+        </section>
+
+        <section class="learning-section" id="repositorios" aria-labelledby="repos-title">
+            <div class="learning-section-heading">
+                <div>
+                    <p class="eyebrow"><span></span> PROJETOS QUE ENSINAM</p>
+                    <h2 id="repos-title">Repositórios</h2>
+                </div>
+            </div>
+            <p class="section-description">Informe seu usuário do GitHub para listar projetos públicos e gerar sugestões de estudo a partir das tecnologias utilizadas.</p>
+            <form class="inline-form" id="github-form">
+                <label class="visually-hidden" for="github-username">Usuário do GitHub</label>
+                <input id="github-username" name="username" type="text" autocomplete="off" placeholder="Seu usuário do GitHub" required pattern="[A-Za-z0-9-]{1,39}" maxlength="39">
+                <button class="secondary-button" type="submit" id="github-submit">Buscar repositórios</button>
+            </form>
+            <p class="status-message" id="github-status" role="status" aria-live="polite"></p>
+            <div class="repository-grid" id="repository-list" aria-live="polite"></div>
+        </section>
+
+        <section class="learning-section" id="videos" aria-labelledby="videos-title">
+            <div class="learning-section-heading">
+                <div>
+                    <p class="eyebrow"><span></span> APRENDA ASSISTINDO</p>
+                    <h2 id="videos-title">Vídeos</h2>
+                </div>
+            </div>
+            <p class="section-description">Pesquise aulas no YouTube sobre o que você está estudando. Adicione o link da aula ao Meu Drop para acompanhar o tempo assistido dentro desta página.</p>
+            <form class="inline-form" id="video-search-form">
+                <label class="visually-hidden" for="video-query">Assunto para pesquisar no YouTube</label>
+                <input id="video-query" name="query" type="search" placeholder="Ex.: JavaScript para iniciantes" required>
+                <button class="secondary-button" type="submit">Buscar no YouTube</button>
+            </form>
+            <div id="video-search-result" aria-live="polite"></div>
+            <p class="privacy-note">A busca abre os resultados do YouTube em uma nova aba. Para registrar seu progresso, adicione uma aula usando o link de compartilhamento do vídeo.</p>
+        </section>
+
+        <section class="learning-section" id="meu-drop" aria-labelledby="drop-title">
+            <div class="learning-section-heading">
+                <div>
+                    <p class="eyebrow"><span></span> SEU ESPAÇO DE ESTUDO</p>
+                    <h2 id="drop-title">Meu Drop</h2>
+                </div>
+            </div>
+            <div class="drop-forms">
+                <form class="drop-form" id="topic-form">
+                    <h3>Adicionar assunto</h3>
+                    <label class="field-label" for="topic-name">O que você está estudando?</label>
+                    <div class="inline-form">
+                        <input id="topic-name" name="topic" type="text" placeholder="Ex.: Desenvolvimento web" required maxlength="80">
+                        <button class="secondary-button" type="submit">Adicionar</button>
+                    </div>
+                </form>
+                <form class="drop-form" id="lesson-form">
+                    <h3>Adicionar aula</h3>
+                    <label class="field-label" for="lesson-topic">Assunto</label>
+                    <select id="lesson-topic" name="topic" required>
+                        <option value="">Adicione um assunto primeiro</option>
+                    </select>
+                    <label class="field-label" for="lesson-title">Nome da aula</label>
+                    <input id="lesson-title" name="title" type="text" placeholder="Ex.: Introdução a JavaScript" required maxlength="120">
+                    <label class="field-label" for="lesson-url">Link do vídeo no YouTube</label>
+                    <input id="lesson-url" name="url" type="url" placeholder="https://www.youtube.com/watch?v=..." required>
+                    <button class="secondary-button" type="submit">Salvar aula</button>
+                    <p class="status-message" id="lesson-status" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+            <div class="topic-list" id="topic-list" aria-live="polite"></div>
+            <p class="empty-state" id="empty-state">Seus assuntos e aulas adicionados aparecerão aqui.</p>
+        </section>
+
         <footer class="site-footer">ESTUDE. EXPLORE. DECOLE.</footer>
     </main>
+    <script src="MeuDrop.js" defer></script>
 </body>
 </html>
