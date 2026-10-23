@@ -8,6 +8,12 @@ A especificação do produto está em `docs/implementation-status.md`. A interfa
 
 Cadastro de candidato, confirmação de e-mail, login/logout, recuperação de senha por e-mail e edição do próprio perfil já têm uma implementação inicial. A plataforma continua em desenvolvimento: não oferece exportação/exclusão de conta, MFA, perfis para recrutadores ou fluxos de avaliação. Não use dados reais; consulte [o estado e os limites](docs/implementation-status.md).
 
+## Trilhas de estudo
+
+A área autenticada oferece duas trilhas demonstrativas: fundamentos de backend e frontend. Cada uma apresenta um objetivo, etapas ordenadas, justificativa, atividade prática e estimativa de tempo. A pessoa escolhe uma trilha, acompanha o progresso e marca as etapas conforme estuda. O progresso é autorrelatado: não mede domínio, não é uma avaliação profissional e não garante emprego ou qualquer resultado “100%”. O catálogo e a integração com PostgreSQL ainda precisam de validação em runtime.
+
+O portfólio privado permite registrar práticas ou projetos em texto, opcionalmente com um link HTTP(S), e remover os próprios registros. Eles são identificados como autorrelatados e não são verificados por avaliadores. Não inclua segredos, dados sensíveis, código confidencial ou conteúdo de terceiros. Desafios, revisão profissional e compartilhamento permanecem pendentes.
+
 ## Stack
 
 - Node.js 24 LTS e npm workspaces.
