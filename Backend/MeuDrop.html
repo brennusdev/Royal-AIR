@@ -34,24 +34,56 @@
     <main class="site-main learning-main">
         <p class="status-message app-status" id="app-status" role="status" aria-live="polite"></p>
         <section class="page-intro">
-            <p class="eyebrow"><span></span> SUA JORNADA DE DESENVOLVIMENTO</p>
-            <h1>Estude com um<br><span>norte claro.</span></h1>
-            <p class="site-lead">Organize seus estudos, acompanhe suas aulas e transforme seus projetos em próximos passos.</p>
+            <p class="eyebrow"><span></span> SEU PAINEL PESSOAL</p>
+            <h1>Meu espaço de<br><span>aprendizado.</span></h1>
+            <p class="site-lead">Um resumo privado neste dispositivo, construído a partir das aulas que você adicionou e assistiu.</p>
         </section>
 
-        <section class="learning-metrics" aria-label="Suas métricas de aprendizado" aria-live="polite">
-            <article class="metric-card">
-                <span class="metric-value" id="metric-topics">0</span>
-                <span class="metric-label">trilhas de estudo</span>
-            </article>
-            <article class="metric-card">
-                <span class="metric-value" id="metric-lessons">0</span>
-                <span class="metric-label">aulas concluídas</span>
-            </article>
-            <article class="metric-card">
-                <span class="metric-value" id="metric-time">0 min</span>
-                <span class="metric-label">assistidos nesta jornada</span>
-            </article>
+        <section class="personal-dashboard" aria-labelledby="dashboard-title">
+            <div class="learning-section-heading">
+                <div>
+                    <p class="eyebrow"><span></span> SUA EVOLUÇÃO</p>
+                    <h2 id="dashboard-title">Meu progresso</h2>
+                </div>
+                <span class="profile-badge" id="profile-badge">Perfil neste dispositivo</span>
+            </div>
+            <div class="learning-metrics" aria-label="Suas métricas de aprendizado" aria-live="polite">
+                <article class="metric-card">
+                    <span class="metric-value" id="metric-time">0 h</span>
+                    <span class="metric-label">horas assistidas no Meu Drop</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-value" id="metric-week-time">0 h</span>
+                    <span class="metric-label">estudadas nos últimos 7 dias</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-value" id="metric-commits">—</span>
+                    <span class="metric-label">commits públicos · últimos 30 dias</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-value" id="metric-lessons">0</span>
+                    <span class="metric-label">aulas concluídas</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-value" id="metric-topics">0</span>
+                    <span class="metric-label">assuntos no Meu Drop</span>
+                </article>
+            </div>
+            <p class="privacy-note">O tempo considera apenas vídeos reproduzidos dentro do Meu Drop. As métricas do GitHub usam repositórios públicos; nenhuma informação de código é analisada. Os dados ficam neste navegador e ainda não são protegidos por uma conta autenticada nem sincronizados entre dispositivos.</p>
+        </section>
+
+        <section class="learning-section project-recommendation" id="project-recommendation" aria-labelledby="project-recommendation-title">
+            <div class="learning-section-heading">
+                <div>
+                    <p class="eyebrow"><span></span> PRATIQUE O QUE ESTUDOU</p>
+                    <h2 id="project-recommendation-title">Projeto para continuar</h2>
+                </div>
+            </div>
+            <div class="recommendation-panel" aria-live="polite">
+                <h3 id="project-title">Adicione seus estudos e consulte seu GitHub</h3>
+                <p id="project-copy">A sugestão vai considerar somente os assuntos e títulos das aulas que você registrou e as linguagens/descrições dos seus repositórios públicos.</p>
+                <a class="inline-link" id="project-link" hidden target="_blank" rel="noopener noreferrer"></a>
+            </div>
         </section>
 
         <section class="learning-section" id="aprender" aria-labelledby="learn-title">
@@ -80,13 +112,14 @@
                     <h2 id="repos-title">Repositórios</h2>
                 </div>
             </div>
-            <p class="section-description">Informe seu usuário do GitHub para listar projetos públicos e gerar sugestões de estudo a partir das tecnologias utilizadas.</p>
+            <p class="section-description">Informe seu usuário do GitHub para acompanhar commits recentes em até cinco repositórios públicos relacionados aos seus estudos e encontrar um projeto para praticar.</p>
             <form class="inline-form" id="github-form">
                 <label class="visually-hidden" for="github-username">Usuário do GitHub</label>
                 <input id="github-username" name="username" type="text" autocomplete="off" placeholder="Seu usuário do GitHub" required pattern="[A-Za-z0-9-]{1,39}" maxlength="39">
-                <button class="secondary-button" type="submit" id="github-submit">Buscar repositórios</button>
+                <button class="secondary-button" type="submit" id="github-submit">Atualizar painel</button>
             </form>
             <p class="status-message" id="github-status" role="status" aria-live="polite"></p>
+            <p class="privacy-note">O GitHub limita a consulta sem autenticação. São acompanhados até cinco repositórios públicos com maior relação com seus estudos; o número de commits não inclui projetos privados.</p>
             <div class="repository-grid" id="repository-list" aria-live="polite"></div>
         </section>
 
