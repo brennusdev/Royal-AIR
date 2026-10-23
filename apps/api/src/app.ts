@@ -5,11 +5,21 @@ import Fastify, { type FastifyInstance } from "fastify";
 import { ZodError } from "zod";
 import { healthResponseSchema } from "@platform/shared";
 import { registerAuthRoutes, type AuthOptions } from "./auth.js";
+import {
+  registerLearningPathRoutes,
+  type LearningPathStore
+} from "./learning-paths.js";
+import {
+  registerPortfolioEvidenceRoutes,
+  type PortfolioEvidenceStore
+} from "./portfolio-evidence.js";
 
 export interface AppOptions {
   webOrigin: string;
   checkDatabase: () => Promise<void>;
   auth?: AuthOptions;
+  learningPaths?: LearningPathStore;
+  portfolioEvidence?: PortfolioEvidenceStore;
   logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
 }
 
@@ -30,6 +40,20 @@ export async function createApp(options: AppOptions): Promise<FastifyInstance> {
 
   if (options.auth) {
     await registerAuthRoutes(app, options.auth);
+    if (options.learningPaths) {
+      await registerLearningPathRoutes(app, {
+        authStore: options.auth.store,
+        pathStore: options.learningPaths,
+        webOrigin: options.webOrigin
+      });
+    }
+    if (options.portfolioEvidence) {
+      await registerPortfolioEvidenceRoutes(app, {
+        authStore: options.auth.store,
+        evidenceStore: options.portfolioEvidence,
+        webOrigin: options.webOrigin
+      });
+    }
   }
 
   app.get("/api/v1/health", async () =>
@@ -160,6 +184,74 @@ export async function createApp(options: AppOptions): Promise<FastifyInstance> {
             "200": { description: "The candidate profile was updated." },
             "401": { description: "Authentication is required." },
             "403": { description: "Candidate role is required." }
+          }
+        }
+      },
+      "/api/v1/learning-paths": {
+        get: {
+          operationId: "listLearningPaths",
+          summary: "List published, curated learning paths",
+          responses: { "200": { description: "Available learning paths and ordered study stages." } }
+        }
+      },
+      "/api/v1/my-learning-plan": {
+        get: {
+          operationId: "getCurrentLearningPlan",
+          summary: "Get the authenticated candidate's active learning plan",
+          responses: {
+            "200": { description: "The active plan, or null when none is selected." },
+            "401": { description: "Authentication is required." }
+          }
+        },
+        post: {
+          operationId: "selectLearningPlan",
+          summary: "Select or resume a curated path as the active plan",
+          responses: {
+            "200": { description: "The selected learning plan and its progress." },
+            "401": { description: "Authentication is required." },
+            "404": { description: "The published learning path was not found." }
+          }
+        }
+      },
+      "/api/v1/my-learning-plan/stages/{stageId}": {
+        patch: {
+          operationId: "updateLearningStage",
+          summary: "Mark the next recommended stage as in progress or studied",
+          responses: {
+            "200": { description: "Updated progress and next recommendation." },
+            "401": { description: "Authentication is required." },
+            "409": { description: "An earlier stage must be completed first." }
+          }
+        },
+        "/api/v1/my/evidence": {
+          get: {
+            operationId: "listMyEvidence",
+            summary: "List the authenticated candidate's private, self-reported evidence",
+            responses: {
+              "200": { description: "Evidence belonging only to the authenticated candidate." },
+              "401": { description: "Authentication is required." },
+              "403": { description: "Candidate role is required." }
+            }
+          },
+          post: {
+            operationId: "createMyEvidence",
+            summary: "Add a private, self-reported portfolio evidence entry",
+            responses: {
+              "201": { description: "The private evidence entry was created." },
+              "400": { description: "The request is invalid." },
+              "401": { description: "Authentication is required." }
+            }
+          }
+        },
+        "/api/v1/my/evidence/{evidenceId}": {
+          delete: {
+            operationId: "deleteMyEvidence",
+            summary: "Delete one of the authenticated candidate's private evidence entries",
+            responses: {
+              "204": { description: "The evidence entry was deleted." },
+              "401": { description: "Authentication is required." },
+              "404": { description: "The evidence entry was not found for this candidate." }
+            }
           }
         }
       }

@@ -14,4 +14,4 @@ Este documento registra decisões técnicas iniciais, não constitui parecer jur
 
 ## Limitações atuais
 
-A fundação ainda não armazena perfis em API nem implementa consentimento, exportação ou exclusão. Há uma tela/protótipo legado com `localStorage`; não usar esse dado como cadastro seguro, não compartilhá-lo com recrutadores e apagá-lo apenas pela ação local do navegador. A avaliação de finalidade, base legal, retenção, operadores e direitos do titular requer validação jurídica e de privacidade antes de qualquer lançamento.
+A API armazena contas/perfis privados e registros de portfólio autorrelatados, que o próprio candidato pode remover individualmente. Ainda não há exportação nem exclusão de conta, e não há compartilhamento desses registros com recrutadores. A interface/protótipo legado com `localStorage` permanece separada e não é cadastro seguro. A avaliação de finalidade, base legal, retenção, operadores e direitos do titular requer validação jurídica e de privacidade antes de qualquer lançamento.

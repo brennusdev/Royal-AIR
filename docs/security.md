@@ -19,7 +19,7 @@
 ## Limitações que impedem uso em produção
 
 - Não usar dados reais: não há exportação/exclusão de conta, MFA, retenção configurada nem resposta operacional a incidentes.
-- Existem somente rotas básicas de conta/perfil candidato; desafios, avaliação, recursos de empresa e autorização de organizações continuam ausentes.
+- Rotas iniciais de evidências permitem apenas que um candidato autenticado liste, crie ou remova registros próprios; links não são buscados pelo servidor e criação/remoção validam a origem. Desafios, avaliação, recursos de empresa e autorização de organizações continuam ausentes.
 - SMTP não está provisionado para produção; Mailpit é somente um coletor local. Rate limiting é em memória e por instância/IP, sem proteção distribuída ou limite por conta.
 - Não há autorização de organização, revisão de auditoria independente, upload, integração OAuth do GitHub, IA, backup ou deploy.
 - Não existe revisão jurídica, teste de invasão ou certificação de segurança.

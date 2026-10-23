@@ -145,7 +145,7 @@ function accountResponse(account: AccountRecord) {
   };
 }
 
-function requireSameOrigin(webOrigin: string) {
+export function requireSameOrigin(webOrigin: string) {
   return async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
     if (request.headers.origin !== webOrigin) {
       await reply.code(403).send({ error: "Request origin is not allowed." });
@@ -153,7 +153,7 @@ function requireSameOrigin(webOrigin: string) {
   };
 }
 
-async function getAuthenticatedSession(
+export async function getAuthenticatedSession(
   request: FastifyRequest,
   store: AuthStore
 ): Promise<AuthenticatedSession | null> {

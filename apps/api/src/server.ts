@@ -6,6 +6,8 @@ import { PrismaClient } from "./generated/prisma/client.js";
 import { createApp } from "./app.js";
 import { loadEnvironment } from "./config.js";
 import { createPrismaAuthStore } from "./prisma-auth-store.js";
+import { createPrismaLearningPathStore } from "./prisma-learning-path-store.js";
+import { createPrismaPortfolioEvidenceStore } from "./prisma-portfolio-evidence-store.js";
 
 loadEnvironmentFile({ path: resolve(process.cwd(), "../../.env") });
 
@@ -35,6 +37,8 @@ async function start(): Promise<void> {
       privacyVersion: environment.PRIVACY_VERSION,
       cookieSecure: environment.SESSION_COOKIE_SECURE
     },
+    learningPaths: createPrismaLearningPathStore(prisma),
+    portfolioEvidence: createPrismaPortfolioEvidenceStore(prisma),
     checkDatabase: async () => {
       await prisma.$queryRaw`SELECT 1`;
     }
