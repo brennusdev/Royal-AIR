@@ -1,17 +1,71 @@
-# Royal AIRDROPING
+# Plataforma de evidências técnicas
 
-## Meu Drop
+Aplicação em desenvolvimento para candidatos, avaliadores e empresas registrarem e revisarem competências com base em evidências práticas. O produto não promete emprego nem trata uma pontuação como medida universal de capacidade.
 
-A página `Backend/MeuDrop.html` reúne as áreas de estudo da plataforma e um painel pessoal:
+## Estado atual
 
-- **Aprender:** sugere próximos passos com base nos assuntos, aulas assistidas e linguagem de um repositório selecionado.
-- **Repositórios:** consulta os repositórios públicos de um usuário pela API do GitHub. Compara apenas assuntos e títulos de aulas efetivamente assistidas com nome, descrição, tópicos e linguagem dos repositórios, e destaca um projeto para praticar.
-- **Vídeos:** pesquisa aulas no YouTube e permite adicionar links de vídeos ao Meu Drop.
-- **Meu Drop:** organiza assuntos e aulas, acompanha a reprodução dos vídeos incorporados e contabiliza uma aula como concluída ao assistir pelo menos 80% da duração.
-- **Painel pessoal:** mostra tempo total assistido e nos últimos sete dias, aulas concluídas e commits públicos dos últimos 30 dias nos até cinco repositórios mais relacionados aos estudos. A consulta de commits pode ser limitada pelo GitHub sem autenticação; a interface sinaliza falhas e resultados truncados.
+A especificação do produto está em `docs/implementation-status.md`. A interface HTML antiga em `Backend/` e o script MySQL em `BancoDeDados/banco.sql` são protótipos legados; a aplicação nova está sendo construída em `apps/web`, `apps/api`, `packages/shared` e `prisma/`.
 
-Os assuntos, aulas, perfil público consultado, métricas de commits e tempos assistidos são armazenados no `localStorage` do navegador atual. O tempo mede o período em que os vídeos avançam dentro do player do Meu Drop; estudo fora desta página não é contabilizado. A sugestão de projeto é baseada somente nos assuntos e títulos das aulas efetivamente assistidas e nos metadados públicos dos repositórios; ela não analisa código nem identifica tarefas pendentes. As sugestões são regras locais, não uma integração com um modelo de IA.
+Cadastro de candidato, confirmação de e-mail, login/logout, recuperação de senha por e-mail e edição do próprio perfil já têm uma implementação inicial. A plataforma continua em desenvolvimento: não oferece exportação/exclusão de conta, MFA, perfis para recrutadores ou fluxos de avaliação. Não use dados reais; consulte [o estado e os limites](docs/implementation-status.md).
 
-Este projeto ainda usa um formulário de login demonstrativo, sem autenticação real. Portanto, o painel é pessoal apenas neste navegador: não oferece isolamento seguro entre contas, sincronização entre dispositivos ou acesso a repositórios privados. Essas capacidades exigem autenticação e serviços de backend. Vídeos que não permitem reprodução incorporada podem ser abertos no YouTube, mas o tempo assistido fora desta página não é contabilizado.
+## Stack
 
-Sirva a página por HTTP ou HTTPS para que o player incorporado do YouTube funcione corretamente; abrir o arquivo diretamente pelo endereço `file://` pode impedir a reprodução e o registro do progresso.
+- Node.js 24 LTS e npm workspaces.
+- React, TypeScript e Vite no frontend.
+- Fastify, TypeScript, Zod e REST no backend.
+- PostgreSQL com Prisma.
+- Vitest para testes.
+
+As versões instaladas ficam fixadas no `package-lock.json`; as restrições de Node estão no `package.json`.
+
+## Pré-requisitos
+
+- Node.js 24.13 ou superior na linha 24.x e npm 11.
+- Docker Desktop com Compose para executar o conjunto completo local. Sem Docker, configure PostgreSQL e SMTP acessíveis pela API no `.env`.
+
+## Instalação e execução
+
+1. Copie `.env.example` para `.env` e ajuste a URL do banco se necessário.
+2. Instale as dependências: `npm ci`.
+3. Inicie toda a aplicação: `docker compose up --build`.
+4. Acesse `http://localhost:5173`; API em `http://localhost:3000`; caixa de e-mail de desenvolvimento em `http://localhost:8025`.
+
+O Compose inicia PostgreSQL, aplica migrações pendentes e então inicia API e frontend. O Mailpit recebe os e-mails de confirmação e redefinição localmente; nenhuma mensagem é enviada a endereços externos. O banco mantém dados no volume `postgres_data`.
+
+Para executar API e frontend pelo npm em vez de contêineres, inicie `db` e `mailpit` com `docker compose up -d db mailpit`, execute `npm run db:setup` e depois `npm run dev`.
+
+O endpoint `GET /api/v1/health` verifica se a API está ativa; `GET /api/v1/health/ready` também testa o banco. A especificação OpenAPI está em `GET /api/v1/openapi.json`.
+
+## Comandos de qualidade
+
+- `npm run lint`
+- `npm run typecheck`
+- `npm test`
+- `npm run build`
+- `npm run db:validate`
+- `npm run db:seed` (competências e trilha fictícias identificadas como conteúdo de demonstração)
+
+## Docker
+
+O Compose de desenvolvimento inclui PostgreSQL, Mailpit, API e frontend. Código-fonte é montado para edição com recarga automática; o serviço `migrate` aplica migrações antes de iniciar a API. As imagens são voltadas ao desenvolvimento e não representam uma configuração de produção. Requer Docker Desktop com Docker Compose.
+
+## Conta e autenticação
+
+- O cadastro cria somente usuários candidatos; papéis adicionais não podem ser enviados pelo cliente.
+- A conta fica pendente até confirmar o endereço no Mailpit.
+- Senhas são derivadas com scrypt; sessões usam cookie `HttpOnly`, `SameSite=Lax`, token aleatório e hash persistido no banco.
+- Recuperação usa token de uso único e revoga as sessões existentes.
+- `GET /api/v1/auth/me` e `PATCH /api/v1/profile` acessam apenas a conta autenticada; perfis começam privados.
+- Os textos aceitos durante cadastro são rascunhos de desenvolvimento, não documentos jurídicos finais. Exportação e exclusão ainda não estão disponíveis.
+
+## Documentação
+
+- Arquitetura, entidades e papéis: `docs/architecture.md` e `docs/data-model.md`.
+- Segurança e privacidade: `docs/security.md` e `docs/privacy-lgpd.md`.
+- Avaliação responsável: `docs/evaluation-rubrics.md`.
+- Decisão de stack: `docs/decisions/ADR-0001-modular-monolith.md`.
+- Progresso real das fases: `docs/implementation-status.md`.
+
+## Protótipo anterior
+
+As páginas estáticas em `Backend/` ainda não fazem parte da nova aplicação e contêm uma identidade visual provisória. O SQL em `BancoDeDados/banco.sql` é específico para MySQL e **não** deve ser aplicado à base PostgreSQL da nova aplicação. A migração dos dados não foi iniciada.
