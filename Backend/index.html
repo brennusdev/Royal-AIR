@@ -95,7 +95,7 @@
                     </form>
 
                     <p class="signup-prompt">Ainda não tem uma conta? <a class="text-link" href="#cadastro" id="signup-link">Cadastre-se</a></p>
-                    <p class="demo-note">Ambiente de demonstração · autenticação não configurada</p>
+                    <p class="demo-note">Demonstração: o formulário não autentica contas reais; qualquer dado válido seguirá para o início.</p>
                 </div>
 
                 <div class="auth-view" id="signup-view" hidden>
@@ -220,6 +220,7 @@
 
         loginForm.addEventListener("submit", (event) => {
             event.preventDefault();
+            // Esta validação confere apenas o formato no navegador; não confirma a identidade do usuário.
             if (!loginForm.reportValidity()) return;
 
             const submitButton = loginForm.querySelector(".submit-button");
@@ -232,11 +233,8 @@
             message.classList.remove("is-visible");
 
             window.setTimeout(() => {
-                submitButton.disabled = false;
-                submitButton.classList.remove("is-loading");
-                buttonLabel.textContent = "Entrar na minha conta";
-                message.textContent = "Dados validados para demonstração. A autenticação ainda não está conectada.";
-                message.classList.add("is-visible");
+                // Na versão real, redirecione somente após o servidor confirmar a autenticação.
+                window.location.href = "Inicio.html";
             }, 700);
         });
 
