@@ -232,6 +232,7 @@ function renderProjectRecommendation() {
       ? "Nenhum repositório público consultado corresponde aos assuntos e títulos das suas aulas. Adicione repositórios relacionados ou registre outros estudos."
       : "A sugestão vai considerar somente os assuntos e títulos das aulas que você registrou e as linguagens/descrições dos seus repositórios públicos.";
     elements.projectLink.hidden = true;
+    elements.metricCommits.removeAttribute("title");
     elements.metricCommits.textContent = state.commitMetrics?.repoCount
       ? `${state.commitMetrics.count}${state.commitMetrics.truncated ? "+" : ""}`
       : "—";
