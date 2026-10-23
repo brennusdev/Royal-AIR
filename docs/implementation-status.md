@@ -47,10 +47,50 @@ Esta fase entrega uma fundação técnica, não desafios, avaliação, contrata�
 - As novas rotas não foram testadas com PostgreSQL/SMTP executáveis neste ambiente. A CI está configurada para aplicar as migrações num PostgreSQL de serviço.
 - A fase permanece em andamento até concluir as funcionalidades de conta pendentes e testar a integração de banco/e-mail.
 
+## Fase 3 — Competências e trilhas (implementação concluída; validação runtime pendente)
+
+- [x] Publicar duas trilhas de demonstração: fundamentos de backend e frontend.
+- [x] Registrar objetivo, resultado esperado, ordem, justificativa por etapa, prática sugerida e estimativa.
+- [x] Permitir que candidatos autenticados escolham um objetivo, retomem a trilha, marquem a próxima etapa em andamento/estudada e acompanhem percentagem.
+- [x] Explicar a próxima recomendação e impedir pular etapas.
+- [x] Persistir planos e progresso por candidato, com isolamento no backend.
+- [x] Serializar trocas de trilha concorrentes por candidato no PostgreSQL.
+- [ ] Executar catálogo, seed e acompanhamento num PostgreSQL em runtime; Docker ainda indisponível neste ambiente.
+- [ ] Ampliar o catálogo e curar recursos de aprendizagem como trabalho evolutivo posterior.
+
+### Limites desta primeira entrega de trilhas
+
+O sistema recomenda a próxima etapa da sequência escolhida com base no progresso autorrelatado. Ainda não diagnostica conhecimento prévio nem adapta conteúdo com base em evidências revisadas (que ainda não existem). O percentual mede apenas etapas que a pessoa marcou como estudadas; não comprova competência nem promete resultado “100%”.
+
+### Verificação da Fase 3
+
+- `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` e `npm run db:validate`: concluídos com sucesso; 11 testes passam.
+- O diff Prisma foi usado para conferir os nomes esperados de índices; o índice composto longo na migração foi ajustado ao nome truncado esperado pelo Prisma/PostgreSQL.
+- Seed e migrações ainda não foram aplicados num PostgreSQL em runtime neste ambiente. A serialização de troca usa lock consultivo PostgreSQL e também aguarda validação de integração.
+
+## Fase 4 — Evidências e avaliação (em andamento)
+
+- [x] Permitir que candidatos autenticados registrem, consultem e removam evidências privadas com texto e link opcional HTTP(S).
+- [x] Isolar registros pelo proprietário no backend e rotular os registros como autorrelatados, sem convertê-los em avaliações.
+- [x] Exibir o portfólio privado na área autenticada e alertar para não incluir segredos ou dados sensíveis.
+- [ ] Criar desafios versionados e submissões com evidências relacionadas a competências.
+- [ ] Publicar rubricas e critérios antes das tentativas.
+- [ ] Implementar atribuição e autorização de avaliadores, feedback, revisão/contestação e trilha de auditoria.
+- [ ] Executar a migração e o fluxo do portfólio contra PostgreSQL em runtime.
+
+### Limites da primeira entrega de evidências
+
+O portfólio aceita declarações e links fornecidos pela própria pessoa. Não valida autoria ou qualidade, não há avaliadores nem compartilhamento com empresas e os registros não devem conter credenciais, dados sensíveis, código confidencial ou conteúdo de terceiros. A etapa seguinte deve acrescentar desafios e rubricas sem tratar evidência autorrelatada como competência revisada.
+
+### Verificação da Fase 4
+
+- Rotas de consulta/criação/remoção exigem sessão de candidato; criação e remoção validam a origem.
+- Testes cobrem entrada HTTP(S), classificação autorrelatada, origem e isolamento entre contas.
+- `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` e `npm run db:validate`: concluídos com sucesso; 14 testes passam.
+- A migração `20261023130000_candidate_portfolio_evidence` precisa de execução no PostgreSQL; Docker e psql não estão instalados neste ambiente.
+
 ## Fases seguintes
 
-- [ ] Fase 3 — competências, trilhas, desafios, tentativas e rubricas.
-- [ ] Fase 4 — avaliação, feedback, revisão, portfólio e evidências.
 - [ ] Fase 5 — organizações, vagas, candidaturas e compartilhamento consentido.
 - [ ] Fase 6 — colaboração e integrações.
 - [ ] Fase 7 — IA assistiva com revisão humana e controles de privacidade.
