@@ -81,7 +81,7 @@
             </div>
             <div class="recommendation-panel" aria-live="polite">
                 <h3 id="project-title">Adicione seus estudos e consulte seu GitHub</h3>
-                <p id="project-copy">A sugestão vai considerar somente os assuntos e títulos das aulas que você registrou e as linguagens/descrições dos seus repositórios públicos.</p>
+                <p id="project-copy">A sugestão vai considerar somente os assuntos e títulos das aulas que você assistiu dentro do Meu Drop e os metadados dos seus repositórios públicos.</p>
                 <a class="inline-link" id="project-link" hidden target="_blank" rel="noopener noreferrer"></a>
             </div>
         </section>
@@ -115,7 +115,7 @@
             <p class="section-description">Informe seu usuário do GitHub para acompanhar commits recentes em até cinco repositórios públicos relacionados aos seus estudos e encontrar um projeto para praticar.</p>
             <form class="inline-form" id="github-form">
                 <label class="visually-hidden" for="github-username">Usuário do GitHub</label>
-                <input id="github-username" name="username" type="text" autocomplete="off" placeholder="Seu usuário do GitHub" required pattern="[A-Za-z0-9-]{1,39}" maxlength="39">
+                <input id="github-username" name="username" type="text" autocomplete="off" placeholder="Seu usuário do GitHub" required pattern="[A-Za-z0-9\-]{1,39}" maxlength="39">
                 <button class="secondary-button" type="submit" id="github-submit">Atualizar painel</button>
             </form>
             <p class="status-message" id="github-status" role="status" aria-live="polite"></p>

@@ -48,6 +48,7 @@ const elements = {
 let state = loadState();
 let selectedRepository = null;
 let currentRepositories = state.githubRepositories;
+let lastRenderedStudySignature = null;
 let youtubeApiPromise;
 const players = new Map();
 const playerIntervals = new Map();
@@ -118,11 +119,16 @@ function loadState() {
         updatedAt: Number(parsed.commitMetrics.updatedAt) || 0,
         repoCount: Math.max(0, Number(parsed.commitMetrics.repoCount) || 0),
         truncated: Boolean(parsed.commitMetrics.truncated),
+        username: typeof parsed.commitMetrics.username === "string" ? parsed.commitMetrics.username : "",
+        studySignature: typeof parsed.commitMetrics.studySignature === "string" ? parsed.commitMetrics.studySignature : "",
         byRepo: parsed.commitMetrics.byRepo && typeof parsed.commitMetrics.byRepo === "object" && !Array.isArray(parsed.commitMetrics.byRepo)
           ? Object.fromEntries(Object.entries(parsed.commitMetrics.byRepo).filter(([name, count]) => typeof name === "string" && Number.isFinite(Number(count))).map(([name, count]) => [name, Math.max(0, Number(count))]))
           : {}
       }
       : null;
+    if (parsed.commitMetrics && (!parsed.commitMetrics.username || !parsed.commitMetrics.studySignature)) {
+      parsed.commitMetrics = null;
+    }
     return parsed;
   } catch (error) {
     setStatus(elements.appStatus, `Não foi possível carregar seus estudos salvos: ${error.message} Seus dados anteriores não foram apagados.`, true);
@@ -173,14 +179,18 @@ function updateMetrics() {
   elements.metricLessons.textContent = String(completed);
   elements.metricTime.textContent = formatStudyHours(watchedSeconds);
   elements.metricWeekTime.textContent = formatStudyHours(weeklySeconds);
-  elements.metricCommits.textContent = state.commitMetrics
-    && state.commitMetrics.repoCount > 0
-    ? `${state.commitMetrics.count}${state.commitMetrics.truncated ? "+" : ""}`
+  const commitMetrics = getCurrentCommitMetrics();
+  elements.metricCommits.textContent = commitMetrics?.repoCount
+    ? `${commitMetrics.count}${commitMetrics.truncated ? "+" : ""}`
     : "—";
   elements.profileBadge.textContent = state.githubUsername
     ? `@${state.githubUsername} · neste dispositivo`
     : "Perfil neste dispositivo";
   renderProjectRecommendation();
+  const studySignature = getStudySignature();
+  if (currentRepositories.length && studySignature !== lastRenderedStudySignature) {
+    renderRepositories(currentRepositories);
+  }
 }
 
 const STUDY_STOP_WORDS = new Set(["a", "as", "o", "os", "de", "do", "da", "dos", "das", "e", "em", "para", "com", "por", "um", "uma", "the", "and", "of", "to", "in", "for"]);
@@ -190,8 +200,23 @@ function normalizeForSearch(value) {
 }
 
 function studyTerms() {
-  const text = state.topics.flatMap((topic) => [topic.title, ...topic.lessons.map((lesson) => lesson.title)]).join(" ");
+  const text = state.topics.flatMap((topic) => topic.lessons
+    .filter((lesson) => lesson.watchedSeconds > 0)
+    .flatMap((lesson) => [topic.title, lesson.title])).join(" ");
   return new Set(normalizeForSearch(text).split(/[^a-z0-9+#.]+/).filter((word) => word.length > 1 && !STUDY_STOP_WORDS.has(word)));
+}
+
+function getStudySignature() {
+  return [...studyTerms()].sort().join("|");
+}
+
+function getCurrentCommitMetrics() {
+  const metrics = state.commitMetrics;
+  return metrics
+    && metrics.username === state.githubUsername
+    && metrics.studySignature === getStudySignature()
+    ? metrics
+    : null;
 }
 
 function getRepositoryStudyMatch(repo, terms) {
@@ -226,15 +251,16 @@ function renderProjectRecommendation() {
   const recommendation = ranked[0];
   if (!recommendation) {
     elements.projectTitle.textContent = state.topics.length
-      ? "Ainda não encontrei um projeto relacionado"
-      : "Adicione seus estudos e consulte seu GitHub";
+      ? "Assista a uma aula e consulte seu GitHub"
+      : "Registre uma aula assistida e consulte seu GitHub";
     elements.projectCopy.textContent = state.topics.length
-      ? "Nenhum repositório público consultado corresponde aos assuntos e títulos das suas aulas. Adicione repositórios relacionados ou registre outros estudos."
-      : "A sugestão vai considerar somente os assuntos e títulos das aulas que você registrou e as linguagens/descrições dos seus repositórios públicos.";
+      ? "Para recomendar um projeto, considero somente assuntos e títulos de aulas com tempo assistido registrado no Meu Drop. Depois, comparo essas informações com os metadados dos seus repositórios públicos."
+      : "A sugestão vai considerar somente assuntos e títulos das aulas que você assistiu dentro do Meu Drop e os metadados dos seus repositórios públicos.";
     elements.projectLink.hidden = true;
     elements.metricCommits.removeAttribute("title");
-    elements.metricCommits.textContent = state.commitMetrics?.repoCount
-      ? `${state.commitMetrics.count}${state.commitMetrics.truncated ? "+" : ""}`
+    const commitMetrics = getCurrentCommitMetrics();
+    elements.metricCommits.textContent = commitMetrics?.repoCount
+      ? `${commitMetrics.count}${commitMetrics.truncated ? "+" : ""}`
       : "—";
     return;
   }
@@ -252,13 +278,14 @@ function renderProjectRecommendation() {
   elements.projectLink.href = repo.html_url;
   elements.projectLink.textContent = `Abrir ${repo.full_name} no GitHub →`;
   elements.projectLink.hidden = false;
-  const commitCount = state.commitMetrics?.repoCount
-    ? `${state.commitMetrics.count}${state.commitMetrics.truncated ? "+" : ""}`
+  const commitMetrics = getCurrentCommitMetrics();
+  const commitCount = commitMetrics?.repoCount
+    ? `${commitMetrics.count}${commitMetrics.truncated ? "+" : ""}`
     : "—";
   elements.metricCommits.textContent = commitCount;
-  if (state.commitMetrics?.updatedAt) {
-    const refreshedAt = new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(state.commitMetrics.updatedAt);
-    elements.metricCommits.title = `Atualizado em ${refreshedAt} para ${state.commitMetrics.repoCount} repositório(s) relacionado(s)`;
+  if (commitMetrics?.updatedAt) {
+    const refreshedAt = new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(commitMetrics.updatedAt);
+    elements.metricCommits.title = `Atualizado em ${refreshedAt} para ${commitMetrics.repoCount} repositório(s) relacionado(s)`;
   } else {
     elements.metricCommits.removeAttribute("title");
   }
@@ -511,6 +538,7 @@ function createPlayers() {
               storedLesson.durationSeconds = duration;
             });
             updateProgressDisplay(findLesson(lesson.id));
+            saveState();
             updateMetrics();
           }
         },
@@ -557,7 +585,13 @@ function recordPlayback(lessonId, player, forceSave = false) {
 
   const videoElapsed = currentTime - previousTime.position;
   const elapsed = Math.min((now - previousTime.at) / 1000, 2.5);
-  if (videoElapsed <= 0 || videoElapsed > 2.5 || elapsed <= 0) return;
+  if (videoElapsed <= 0 || videoElapsed > 2.5 || elapsed <= 0) {
+    if (forceSave) {
+      saveState();
+      updateMetrics();
+    }
+    return;
+  }
 
   const lesson = updateLesson(lessonId, (storedLesson) => {
     storedLesson.watchedSeconds += videoElapsed;
@@ -603,6 +637,8 @@ function destroyPlayer(lessonId, flush = false) {
 
 function renderRepositories(repositories) {
   elements.repositoryList.replaceChildren();
+  const commitMetrics = getCurrentCommitMetrics();
+  lastRenderedStudySignature = getStudySignature();
   repositories.forEach((repo) => {
     const card = document.createElement("article");
     card.className = "repository-card";
@@ -618,7 +654,7 @@ function renderRepositories(repositories) {
     const meta = document.createElement("span");
     meta.className = "repository-language";
     meta.textContent = repo.language || "Linguagem não informada";
-    const recentCommits = state.commitMetrics?.byRepo?.[repo.full_name];
+    const recentCommits = commitMetrics?.byRepo?.[repo.full_name];
     if (recentCommits !== undefined) {
       const commitSummary = document.createElement("p");
       commitSummary.className = "repository-commit-summary";
@@ -673,7 +709,7 @@ async function refreshCommitMetrics(username) {
     state.commitMetrics = null;
     saveState();
     updateMetrics();
-    setStatus(elements.githubStatus, "Não encontrei repositórios que correspondam aos assuntos e às aulas registrados. Os commits serão calculados quando houver projetos relacionados.", false);
+    setStatus(elements.githubStatus, "Assista a pelo menos uma aula no Meu Drop. As recomendações e a métrica de commits usam os assuntos e títulos dessas aulas para encontrar projetos públicos relacionados.", false);
     return;
   }
 
@@ -681,7 +717,7 @@ async function refreshCommitMetrics(username) {
   const sinceDate = new Date();
   sinceDate.setDate(sinceDate.getDate() - 30);
   const results = await Promise.allSettled(
-    trackedRepositories.map(({ repo }) => fetchRecentCommits(repo, username, sinceDate.toISOString()))
+    trackedRepositories.map((repo) => fetchRecentCommits(repo, username, sinceDate.toISOString()))
   );
   const successes = results.filter((result) => result.status === "fulfilled").map((result) => result.value);
   const failures = results.filter((result) => result.status === "rejected");
@@ -697,6 +733,8 @@ async function refreshCommitMetrics(username) {
     updatedAt: Date.now(),
     repoCount: successes.length,
     truncated: successes.some((result) => result.truncated),
+    username,
+    studySignature: getStudySignature(),
     byRepo: Object.fromEntries(successes.map((result) => [result.repo, result.count]))
   };
   currentRepositories = state.githubRepositories;
