@@ -1,0 +1,215 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../apps/api/src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AccountStatus {
+  active
+  pending
+  suspended
+  deleted
+}
+
+enum PlatformRole {
+  candidate
+  reviewer
+  recruiter
+  organization_admin
+  platform_admin
+}
+
+enum OrganizationStatus {
+  active
+  pending
+  suspended
+}
+
+enum OrganizationRole {
+  owner
+  admin
+  member
+}
+
+enum ConsentType {
+  terms_of_service
+  privacy_notice
+  profile_sharing
+  ai_processing
+}
+
+enum LearningPathStatus {
+  draft
+  published
+  archived
+}
+
+enum EmailActionPurpose {
+  verify_email
+  reset_password
+}
+
+model User {
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  displayName        String
+  passwordHash       String?
+  status             AccountStatus        @default(pending)
+  roles              UserRole[]
+  candidateProfile   CandidateProfile?
+  organizationMember OrganizationMember[]
+  consentRecords     ConsentRecord[]
+  sessions           Session[]
+  emailActionTokens  EmailActionToken[]
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  @@map("users")
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+  @@map("sessions")
+}
+
+model EmailActionToken {
+  id         String             @id @default(cuid())
+  userId     String
+  tokenHash  String             @unique
+  purpose    EmailActionPurpose
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime           @default(now())
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose, expiresAt])
+  @@map("email_action_tokens")
+}
+
+model UserRole {
+  id        String       @id @default(cuid())
+  userId    String
+  role      PlatformRole
+  createdAt DateTime     @default(now())
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, role])
+  @@index([role])
+  @@map("user_roles")
+}
+
+model CandidateProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  headline       String?
+  region         String?
+  isDiscoverable Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("candidate_profiles")
+}
+
+model Organization {
+  id        String               @id @default(cuid())
+  name      String
+  slug      String               @unique
+  status    OrganizationStatus   @default(pending)
+  members   OrganizationMember[]
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+
+  @@map("organizations")
+}
+
+model OrganizationMember {
+  id             String           @id @default(cuid())
+  organizationId String
+  userId         String
+  role           OrganizationRole @default(member)
+  createdAt      DateTime         @default(now())
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map("organization_members")
+}
+
+model ConsentRecord {
+  id          String      @id @default(cuid())
+  userId      String
+  type        ConsentType
+  version     String
+  grantedAt   DateTime    @default(now())
+  withdrawnAt DateTime?
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type, grantedAt])
+  @@map("consent_records")
+}
+
+model Competency {
+  id          String              @id @default(cuid())
+  slug        String              @unique
+  title       String
+  description String
+  versions    CompetencyVersion[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@map("competencies")
+}
+
+model CompetencyVersion {
+  id                       String                   @id @default(cuid())
+  competencyId             String
+  version                  Int
+  title                    String
+  description              String
+  competency               Competency               @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  learningPathCompetencies LearningPathCompetency[]
+  createdAt                DateTime                 @default(now())
+
+  @@unique([competencyId, version])
+  @@index([competencyId])
+  @@map("competency_versions")
+}
+
+model LearningPath {
+  id           String                   @id @default(cuid())
+  slug         String                   @unique
+  title        String
+  description  String
+  status       LearningPathStatus       @default(draft)
+  competencies LearningPathCompetency[]
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@map("learning_paths")
+}
+
+model LearningPathCompetency {
+  id                  String            @id @default(cuid())
+  learningPathId      String
+  competencyVersionId String
+  position            Int
+  learningPath        LearningPath      @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+  competencyVersion   CompetencyVersion @relation(fields: [competencyVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([learningPathId, competencyVersionId])
+  @@unique([learningPathId, position])
+  @@map("learning_path_competencies")
+}
