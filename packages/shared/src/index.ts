@@ -42,10 +42,61 @@ export const accountSummarySchema = z.object({
   }).nullable()
 });
 
+export const learningPathStageSchema = z.object({
+  id: z.string(),
+  position: z.number().int().positive(),
+  competency: z.object({
+    slug: z.string(),
+    title: z.string(),
+    description: z.string()
+  }),
+  whyThisStep: z.string(),
+  practiceTask: z.string(),
+  estimatedMinutes: z.number().int().positive(),
+  resourceTitle: z.string().nullable(),
+  resourceUrl: z.string().url().nullable(),
+  status: z.enum(["not_started", "in_progress", "studied"])
+});
+
+export const learningPathSchema = z.object({
+  id: z.string(),
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  targetRole: z.string(),
+  outcome: z.string(),
+  estimatedMinutes: z.number().int().nonnegative(),
+  stages: z.array(learningPathStageSchema)
+});
+
+export const learningPlanSchema = z.object({
+  id: z.string(),
+  status: z.enum(["active", "paused", "completed"]),
+  progressPercent: z.number().int().min(0).max(100),
+  completedStages: z.number().int().nonnegative(),
+  totalStages: z.number().int().nonnegative(),
+  nextStageId: z.string().nullable(),
+  recommendationReason: z.string(),
+  path: learningPathSchema
+});
+
+export const portfolioEvidenceSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  url: z.string().url().nullable(),
+  status: evidenceStatusSchema,
+  createdAt: z.string().datetime()
+});
+
 export type UserRole = z.infer<typeof userRoleSchema>;
 export type CompetencyLevel = z.infer<typeof competencyLevelSchema>;
 export type EvidenceStatus = z.infer<typeof evidenceStatusSchema>;
 export type AccountSummary = z.infer<typeof accountSummarySchema>;
+export type LearningPath = z.infer<typeof learningPathSchema>;
+export type LearningPlan = z.infer<typeof learningPlanSchema>;
+export type LearningStepStatus = z.infer<typeof learningPathStageSchema>["status"];
+export type PortfolioEvidence = z.infer<typeof portfolioEvidenceSchema>;
 
 export interface CompetencyEvidence {
   slug: string;
