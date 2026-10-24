@@ -6,7 +6,7 @@ Aplicação em desenvolvimento para candidatos, avaliadores e empresas registrar
 
 A especificação do produto está em `docs/implementation-status.md`. A interface HTML antiga em `Backend/` e o script MySQL em `BancoDeDados/banco.sql` são protótipos legados; a aplicação nova está sendo construída em `apps/web`, `apps/api`, `packages/shared` e `prisma/`.
 
-Cadastro de candidato, confirmação de e-mail, login/logout, recuperação de senha por e-mail, edição do próprio perfil, trilhas autorrelatadas e desafios fictícios com rascunho/envio privado já têm uma implementação inicial. A plataforma continua em desenvolvimento: não oferece exportação/exclusão de conta, MFA, avaliação por avaliadores, perfis para recrutadores ou fluxos de contratação. Não use dados reais; consulte [o estado e os limites](docs/implementation-status.md).
+Cadastro de candidato, confirmação de e-mail, login/logout, recuperação de senha por e-mail, edição do próprio perfil, trilhas autorrelatadas e desafios fictícios com rascunho/envio privado já têm uma implementação inicial. A plataforma continua em desenvolvimento: não oferece exportação/exclusão de conta, MFA, avaliação por avaliadores, perfis para recrutadores ou fluxos de contratação. A integração Vercel está preparada em código, mas nenhum deployment foi criado. Não use dados reais; consulte [o estado e os limites](docs/implementation-status.md).
 
 ## Trilhas de estudo
 
@@ -69,6 +69,7 @@ O Compose de desenvolvimento inclui PostgreSQL, Mailpit, API e frontend. Código
 - Arquitetura, entidades e papéis: `docs/architecture.md` e `docs/data-model.md`.
 - Segurança e privacidade: `docs/security.md` e `docs/privacy-lgpd.md`.
 - Avaliação responsável: `docs/evaluation-rubrics.md`.
+- Preparação e limites do deploy na Vercel: `docs/deployment-vercel.md`.
 - Decisão de stack: `docs/decisions/ADR-0001-modular-monolith.md`.
 - Progresso real das fases: `docs/implementation-status.md`.
 
