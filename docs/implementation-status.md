@@ -101,6 +101,25 @@ O portfólio e as tentativas aceitam declarações e links fornecidos pela próp
 - [ ] Fase 7 — IA assistiva com revisão humana e controles de privacidade.
 - [ ] Fase 8 — endurecimento, acessibilidade, operação e lançamento.
 
+## Preparação para deploy na Vercel (não publicado)
+
+- [x] Criar Function Node.js 24 para encaminhar as rotas `/api/*` ao Fastify.
+- [x] Configurar build estático Vite e rewrite da API em `vercel.json`.
+- [x] Reutilizar o runtime compartilhado entre o servidor local e a Function.
+- [x] Validar origem Preview pelo hostname da Vercel e exigir em Production origem HTTPS, SMTP/remetente e versões de documentos não marcadas como rascunho.
+- [x] Documentar variáveis, banco, migrações, seed, limites e passos de validação em `docs/deployment-vercel.md`.
+- [ ] Validar a Function, reescritas e cookies em deployment Preview Vercel.
+- [ ] Provisionar PostgreSQL separado com pool de conexões, SMTP, variáveis protegidas e acesso privado a previews.
+- [ ] Fazer revisão dos documentos legais e das pendências de privacidade antes de qualquer cadastro público.
+- [ ] Fazer deploy de produção apenas após liberar os critérios de lançamento; nenhum deployment foi criado nesta etapa.
+
+### Verificação da preparação Vercel
+
+- `npm run lint`, `npm run typecheck`, `npm test` e `npm run build`: resultados registrados após a integração serverless.
+- Testes cobrem roteamento do adapter, limite de corpo, origem derivada de Preview e validação de configuração de Production; 24 testes passam no total.
+- `vercel.json` foi validado como JSON. O comportamento da plataforma ainda depende de confirmação em Preview.
+- Não há Vercel CLI nem projeto Vercel ligado neste ambiente; PostgreSQL, SMTP e segredos de deployment também não foram provisionados.
+
 ## Critérios de aceite
 
 Nenhum critério global de produto é considerado concluído nesta fase. A base só estará pronta para dados reais após autenticação, autorização por recurso, testes de isolamento, revisão de privacidade e segurança, backup e configuração operacional. Atualizar esta lista somente com evidência de execução.

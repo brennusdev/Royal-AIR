@@ -19,9 +19,9 @@
 ## Limitações que impedem uso em produção
 
 - Não usar dados reais: não há exportação/exclusão de conta, MFA, retenção configurada nem resposta operacional a incidentes.
-- Rotas iniciais de evidências permitem apenas que um candidato autenticado liste, crie ou remova registros próprios; links não são buscados pelo servidor e criação/remoção validam a origem. Desafios, avaliação, recursos de empresa e autorização de organizações continuam ausentes.
+- Rotas de evidências permitem apenas que um candidato autenticado liste, crie ou remova registros próprios; links não são buscados pelo servidor e mutações validam a origem. Desafios publicados permitem rascunhos e envios privados; não há avaliação humana, recursos de empresa nem autorização de organizações.
 - SMTP não está provisionado para produção; Mailpit é somente um coletor local. Rate limiting é em memória e por instância/IP, sem proteção distribuída ou limite por conta.
-- Não há autorização de organização, revisão de auditoria independente, upload, integração OAuth do GitHub, IA, backup ou deploy.
+- A integração serverless preparada para Vercel não foi validada em deployment. Não há autorização de organização, revisão de auditoria independente, upload, integração OAuth do GitHub, IA, backup ou operação de produção.
 - Não existe revisão jurídica, teste de invasão ou certificação de segurança.
 
 Antes de armazenar dados reais, concluir os controles de privacidade, MFA conforme risco, recuperação e suporte operacional, autorização e isolamento de todos os recursos, rate limit distribuído, auditoria, gestão de segredos, backup/restauração, revisão jurídica e teste de segurança. Tratar código e anexos futuros como dados não confiáveis; limitar tamanho, tipo e acesso. Nunca executar código submetido.
