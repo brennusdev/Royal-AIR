@@ -89,6 +89,32 @@ export const portfolioEvidenceSchema = z.object({
   createdAt: z.string().datetime()
 });
 
+export const challengeSchema = z.object({
+  id: z.string(),
+  slug: z.string(),
+  title: z.string(),
+  context: z.string(),
+  description: z.string(),
+  difficulty: z.string(),
+  estimatedMinutes: z.number().int().positive(),
+  version: z.number().int().positive(),
+  acceptanceCriteria: z.array(z.string()),
+  rubricCriteria: z.array(z.string())
+});
+
+export const challengeAttemptSchema = z.object({
+  id: z.string(),
+  challengeId: z.string(),
+  challengeTitle: z.string(),
+  challengeVersion: z.number().int().positive(),
+  status: z.enum(["in_progress", "submitted"]),
+  approach: z.string().nullable(),
+  submissionUrl: z.string().url().nullable(),
+  startedAt: z.string().datetime(),
+  submittedAt: z.string().datetime().nullable(),
+  updatedAt: z.string().datetime()
+});
+
 export type UserRole = z.infer<typeof userRoleSchema>;
 export type CompetencyLevel = z.infer<typeof competencyLevelSchema>;
 export type EvidenceStatus = z.infer<typeof evidenceStatusSchema>;
@@ -97,6 +123,8 @@ export type LearningPath = z.infer<typeof learningPathSchema>;
 export type LearningPlan = z.infer<typeof learningPlanSchema>;
 export type LearningStepStatus = z.infer<typeof learningPathStageSchema>["status"];
 export type PortfolioEvidence = z.infer<typeof portfolioEvidenceSchema>;
+export type Challenge = z.infer<typeof challengeSchema>;
+export type ChallengeAttempt = z.infer<typeof challengeAttemptSchema>;
 
 export interface CompetencyEvidence {
   slug: string;
