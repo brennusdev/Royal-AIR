@@ -6,13 +6,13 @@ Aplicação em desenvolvimento para candidatos, avaliadores e empresas registrar
 
 A especificação do produto está em `docs/implementation-status.md`. A interface HTML antiga em `Backend/` e o script MySQL em `BancoDeDados/banco.sql` são protótipos legados; a aplicação nova está sendo construída em `apps/web`, `apps/api`, `packages/shared` e `prisma/`.
 
-Cadastro de candidato, confirmação de e-mail, login/logout, recuperação de senha por e-mail e edição do próprio perfil já têm uma implementação inicial. A plataforma continua em desenvolvimento: não oferece exportação/exclusão de conta, MFA, perfis para recrutadores ou fluxos de avaliação. Não use dados reais; consulte [o estado e os limites](docs/implementation-status.md).
+Cadastro de candidato, confirmação de e-mail, login/logout, recuperação de senha por e-mail, edição do próprio perfil, trilhas autorrelatadas e desafios fictícios com rascunho/envio privado já têm uma implementação inicial. A plataforma continua em desenvolvimento: não oferece exportação/exclusão de conta, MFA, avaliação por avaliadores, perfis para recrutadores ou fluxos de contratação. Não use dados reais; consulte [o estado e os limites](docs/implementation-status.md).
 
 ## Trilhas de estudo
 
 A área autenticada oferece duas trilhas demonstrativas: fundamentos de backend e frontend. Cada uma apresenta um objetivo, etapas ordenadas, justificativa, atividade prática e estimativa de tempo. A pessoa escolhe uma trilha, acompanha o progresso e marca as etapas conforme estuda. O progresso é autorrelatado: não mede domínio, não é uma avaliação profissional e não garante emprego ou qualquer resultado “100%”. O catálogo e a integração com PostgreSQL ainda precisam de validação em runtime.
 
-O portfólio privado permite registrar práticas ou projetos em texto, opcionalmente com um link HTTP(S), e remover os próprios registros. Eles são identificados como autorrelatados e não são verificados por avaliadores. Não inclua segredos, dados sensíveis, código confidencial ou conteúdo de terceiros. Desafios, revisão profissional e compartilhamento permanecem pendentes.
+O portfólio privado permite registrar práticas ou projetos em texto, opcionalmente com um link HTTP(S), e remover os próprios registros. Eles são identificados como autorrelatados e não são verificados por avaliadores. Desafios demonstrativos exibem critérios antes do início e aceitam abordagem em texto e link HTTP(S); rascunhos e envios ficam privados e ainda não são avaliados. Não inclua segredos, dados sensíveis, código confidencial ou conteúdo de terceiros. Revisão profissional e compartilhamento permanecem pendentes.
 
 ## Stack
 
@@ -49,7 +49,7 @@ O endpoint `GET /api/v1/health` verifica se a API está ativa; `GET /api/v1/heal
 - `npm test`
 - `npm run build`
 - `npm run db:validate`
-- `npm run db:seed` (competências e trilha fictícias identificadas como conteúdo de demonstração)
+- `npm run db:seed` (competências, trilhas e desafios fictícios identificados como conteúdo de demonstração)
 
 ## Docker
 

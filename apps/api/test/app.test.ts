@@ -51,5 +51,7 @@ describe("API foundation routes", () => {
     expect(response.json().openapi).toBe("3.1.0");
     expect(response.json().paths["/api/v1/health/ready"]).toBeDefined();
     expect(response.json().paths["/api/v1/auth/login"]).toBeDefined();
+    expect(response.json().paths["/api/v1/challenges"]).toBeDefined();
+    expect(response.json().paths["/api/v1/my/challenge-attempts"]).toBeDefined();
   });
 });
