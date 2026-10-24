@@ -1,6 +1,6 @@
 # Estado de implementação
 
-Última atualização: 2026-10-23.
+Última atualização: 2026-10-24.
 
 ## Fase 0 — Planejamento técnico
 
@@ -28,7 +28,7 @@
 - O Compose e o workflow CI foram analisados sintaticamente como YAML. O CLI/daemon Docker não está instalado neste ambiente; imagens, inicialização de todos os serviços, migrações e seed ainda não foram executados aqui. O CI agora aplica as migrações contra PostgreSQL.
 - A máquina usa Node 26 Current; o alvo documentado é Node 24 LTS. Os comandos passaram em Node 26, mas devem também ser executados na linha Node 24 antes de considerar a plataforma operacional.
 
-Esta fase entrega uma fundação técnica, não desafios, avaliação, contratação ou integração de IA. Não usar para armazenar dados reais.
+Esta fase entrega uma fundação técnica, não avaliação profissional, contratação ou integração de IA. Não usar para armazenar dados reais.
 
 ## Fase 2 — Autenticação e autorização (em andamento)
 
@@ -73,21 +73,27 @@ O sistema recomenda a próxima etapa da sequência escolhida com base no progres
 - [x] Permitir que candidatos autenticados registrem, consultem e removam evidências privadas com texto e link opcional HTTP(S).
 - [x] Isolar registros pelo proprietário no backend e rotular os registros como autorrelatados, sem convertê-los em avaliações.
 - [x] Exibir o portfólio privado na área autenticada e alertar para não incluir segredos ou dados sensíveis.
-- [ ] Criar desafios versionados e submissões com evidências relacionadas a competências.
-- [ ] Publicar rubricas e critérios antes das tentativas.
+- [x] Exibir desafios fictícios publicados com critérios de aceitação e critérios de avaliação antes de iniciar.
+- [x] Permitir iniciar/retomar uma tentativa por desafio, salvar rascunho e enviar abordagem/link HTTP(S).
+- [x] Isolar tentativas por candidato, validar origem em alterações e impedir alteração após envio.
+- [x] Copiar versão e critérios para a tentativa, preservando o contexto da entrega.
 - [ ] Implementar atribuição e autorização de avaliadores, feedback, revisão/contestação e trilha de auditoria.
-- [ ] Executar a migração e o fluxo do portfólio contra PostgreSQL em runtime.
+- [ ] Criar avaliação por rubrica, resultados por critério e evidência verificada; submissão não é avaliação.
+- [ ] Executar migrações, seed e fluxo de tentativas contra PostgreSQL em runtime.
 
 ### Limites da primeira entrega de evidências
 
-O portfólio aceita declarações e links fornecidos pela própria pessoa. Não valida autoria ou qualidade, não há avaliadores nem compartilhamento com empresas e os registros não devem conter credenciais, dados sensíveis, código confidencial ou conteúdo de terceiros. A etapa seguinte deve acrescentar desafios e rubricas sem tratar evidência autorrelatada como competência revisada.
+O portfólio e as tentativas aceitam declarações e links fornecidos pela própria pessoa. Não validam autoria ou qualidade; ainda não há avaliadores nem compartilhamento com empresas. As tentativas enviadas são rotuladas como não avaliadas e não elevam níveis de competência. Registros não devem conter credenciais, dados sensíveis, código confidencial ou conteúdo de terceiros.
 
 ### Verificação da Fase 4
 
 - Rotas de consulta/criação/remoção exigem sessão de candidato; criação e remoção validam a origem.
 - Testes cobrem entrada HTTP(S), classificação autorrelatada, origem e isolamento entre contas.
-- `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` e `npm run db:validate`: concluídos com sucesso; 14 testes passam.
-- A migração `20261023130000_candidate_portfolio_evidence` precisa de execução no PostgreSQL; Docker e psql não estão instalados neste ambiente.
+- `npm run lint`: concluído com sucesso após a implementação de desafios.
+- `npm test`: 18 testes passaram após a implementação de desafios; cobertura inclui listagem de critérios, sessão/origem, início, envio, URL e isolamento entre candidatos.
+- `npm run db:validate` e `npm run db:generate`: concluídos com sucesso com uma URL local de exemplo.
+- `npm run typecheck`: inicialmente encontrou um erro de tipagem na leitura da resposta da interface, que foi corrigido; repetir após a correção e registrar o resultado final.
+- A migração `20261024120000_challenges_and_attempts` e o seed ainda precisam ser executados em PostgreSQL; Docker e psql não estão instalados neste ambiente.
 
 ## Fases seguintes
 
