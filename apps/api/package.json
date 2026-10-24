@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "prebuild": "npm --prefix ../.. run build:shared && npm --prefix ../.. run db:generate",
     "build": "tsc -p tsconfig.json",
+    "pretypecheck": "npm --prefix ../.. run build:shared && npm --prefix ../.. run db:generate",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

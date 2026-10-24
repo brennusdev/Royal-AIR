@@ -8,7 +8,7 @@ Esta configuração publica o frontend Vite como conteúdo estático e encaminha
 
 1. Importe o repositório como um projeto Vercel usando a raiz do repositório (não configure `apps/web` como Root Directory).
 2. Mantenha o framework Vite e use a versão Node 24 indicada pelo `engines` no `package.json` raiz.
-3. O arquivo `vercel.json` define `npm run build`, o diretório estático `apps/web/dist` e a reescrita das rotas `/api/*` para a Function compartilhada em `api/index.ts`.
+3. O arquivo `vercel.json` define `npm run build`, o diretório estático `apps/web/dist` e a reescrita das rotas `/api/*` para a Function compartilhada em `api/index.ts`. Esse build prepara os artefatos compartilhados e o Prisma Client antes da API; se o workspace da API for compilado diretamente, os scripts dele também executam essa preparação.
 4. Configure variáveis distintas para Preview e Production. Preview deve usar um banco separado e dados fictícios. Ative proteção de acesso a previews no painel Vercel.
 5. Production exige `WEB_ORIGIN` explícito. Em Preview, a aplicação usa `VERCEL_URL` se `WEB_ORIGIN` não for definido, limitando operações ao host daquele deployment.
 
