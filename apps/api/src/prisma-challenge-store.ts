@@ -22,6 +22,8 @@ function toAttempt(record: {
   id: string;
   challengeId: string;
   challengeVersion: number;
+  acceptanceCriteria: string[];
+  rubricCriteria: string[];
   status: "in_progress" | "submitted";
   approach: string | null;
   submissionUrl: string | null;
@@ -35,6 +37,8 @@ function toAttempt(record: {
     challengeId: record.challengeId,
     challengeTitle: record.challenge.title,
     challengeVersion: record.challengeVersion,
+    acceptanceCriteria: record.acceptanceCriteria,
+    rubricCriteria: record.rubricCriteria,
     status: record.status,
     approach: record.approach,
     submissionUrl: record.submissionUrl,
@@ -69,7 +73,12 @@ export function createPrismaChallengeStore(prisma: PrismaClient): ChallengeStore
     async startAttempt(userId, challengeId) {
       const challenge = await prisma.challenge.findFirst({
         where: { id: challengeId, status: "published" },
-        select: { id: true, version: true }
+        select: {
+          id: true,
+          version: true,
+          acceptanceCriteria: true,
+          rubricCriteria: true
+        }
       });
       if (!challenge) {
         return null;
@@ -77,7 +86,13 @@ export function createPrismaChallengeStore(prisma: PrismaClient): ChallengeStore
 
       const attempt = await prisma.challengeAttempt.upsert({
         where: { userId_challengeId: { userId, challengeId } },
-        create: { userId, challengeId, challengeVersion: challenge.version },
+        create: {
+          userId,
+          challengeId,
+          challengeVersion: challenge.version,
+          acceptanceCriteria: challenge.acceptanceCriteria,
+          rubricCriteria: challenge.rubricCriteria
+        },
         update: {},
         include: attemptInclude
       });

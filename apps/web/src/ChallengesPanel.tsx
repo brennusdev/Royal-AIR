@@ -175,8 +175,6 @@ function ChallengesPanel() {
     }
   }
 
-  const selectedChallenge = challenges.find((challenge) => challenge.id === selected?.challengeId);
-
   return (
     <section className="challenge-panel" aria-labelledby="challenge-panel-title">
       <div className="portfolio-heading">
@@ -226,7 +224,11 @@ function ChallengesPanel() {
       {selected && (
         <div className="challenge-submission">
           <h4>{selected.challengeTitle} — {selected.status === "submitted" ? "Enviado" : "Sua entrega"}</h4>
-          {selectedChallenge && <p>Critérios vinculados à versão {selected.challengeVersion}; a rubrica desta tentativa não muda retroativamente.</p>}
+          <p>Critérios registrados para a versão {selected.challengeVersion} desta tentativa:</p>
+          <h5>Critérios de aceitação</h5>
+          <ul>{selected.acceptanceCriteria.map((criterion) => <li key={criterion}>{criterion}</li>)}</ul>
+          <h5>Critérios de avaliação previstos</h5>
+          <ul>{selected.rubricCriteria.map((criterion) => <li key={criterion}>{criterion}</li>)}</ul>
           {selected.status === "in_progress" ? (
             <form className="profile-form evidence-form" onSubmit={(event) => void saveDraft(event)}>
               <label>

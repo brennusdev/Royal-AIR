@@ -89,6 +89,8 @@ class MemoryChallengeStore implements ChallengeStore {
       challengeId,
       challengeTitle: challenge.title,
       challengeVersion: challenge.version,
+      acceptanceCriteria: challenge.acceptanceCriteria,
+      rubricCriteria: challenge.rubricCriteria,
       status: "in_progress",
       approach: null,
       submissionUrl: null,
