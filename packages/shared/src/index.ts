@@ -107,6 +107,8 @@ export const challengeAttemptSchema = z.object({
   challengeId: z.string(),
   challengeTitle: z.string(),
   challengeVersion: z.number().int().positive(),
+  acceptanceCriteria: z.array(z.string()),
+  rubricCriteria: z.array(z.string()),
   status: z.enum(["in_progress", "submitted"]),
   approach: z.string().nullable(),
   submissionUrl: z.string().url().nullable(),
