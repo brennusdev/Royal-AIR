@@ -81,8 +81,8 @@ function App() {
               Acessar minha conta <span aria-hidden="true">→</span>
             </a>
             <p className="honest-note">
-              Cadastro e trilhas de estudo têm uma versão inicial. Avaliações
-              profissionais e oportunidades ainda não estão disponíveis.
+              Cadastro, trilhas e desafios práticos têm uma versão inicial.
+              Avaliações profissionais e oportunidades ainda não estão disponíveis.
             </p>
           </div>
           <aside className="evidence-card" aria-label="Exemplo ilustrativo de evidência">

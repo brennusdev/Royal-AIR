@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { accountSummarySchema, type AccountSummary } from "@platform/shared";
 import LearningPathPanel from "./LearningPathPanel.js";
 import PortfolioEvidencePanel from "./PortfolioEvidencePanel.js";
+import ChallengesPanel from "./ChallengesPanel.js";
 
 type FormMode = "login" | "register" | "forgot" | "reset";
 
@@ -220,6 +221,7 @@ function AuthPanel() {
               <button className="primary-link" type="submit" disabled={busy}>Salvar perfil</button>
             </form>
             <LearningPathPanel />
+            <ChallengesPanel />
             <PortfolioEvidencePanel />
           </>
         ) : (

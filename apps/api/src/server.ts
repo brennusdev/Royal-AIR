@@ -8,6 +8,7 @@ import { loadEnvironment } from "./config.js";
 import { createPrismaAuthStore } from "./prisma-auth-store.js";
 import { createPrismaLearningPathStore } from "./prisma-learning-path-store.js";
 import { createPrismaPortfolioEvidenceStore } from "./prisma-portfolio-evidence-store.js";
+import { createPrismaChallengeStore } from "./prisma-challenge-store.js";
 
 loadEnvironmentFile({ path: resolve(process.cwd(), "../../.env") });
 
@@ -39,6 +40,7 @@ async function start(): Promise<void> {
     },
     learningPaths: createPrismaLearningPathStore(prisma),
     portfolioEvidence: createPrismaPortfolioEvidenceStore(prisma),
+    challenges: createPrismaChallengeStore(prisma),
     checkDatabase: async () => {
       await prisma.$queryRaw`SELECT 1`;
     }

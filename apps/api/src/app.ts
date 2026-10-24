@@ -13,6 +13,7 @@ import {
   registerPortfolioEvidenceRoutes,
   type PortfolioEvidenceStore
 } from "./portfolio-evidence.js";
+import { registerChallengeRoutes, type ChallengeStore } from "./challenges.js";
 
 export interface AppOptions {
   webOrigin: string;
@@ -20,6 +21,7 @@ export interface AppOptions {
   auth?: AuthOptions;
   learningPaths?: LearningPathStore;
   portfolioEvidence?: PortfolioEvidenceStore;
+  challenges?: ChallengeStore;
   logLevel?: "fatal" | "error" | "warn" | "info" | "debug" | "trace" | "silent";
 }
 
@@ -51,6 +53,13 @@ export async function createApp(options: AppOptions): Promise<FastifyInstance> {
       await registerPortfolioEvidenceRoutes(app, {
         authStore: options.auth.store,
         evidenceStore: options.portfolioEvidence,
+        webOrigin: options.webOrigin
+      });
+    }
+    if (options.challenges) {
+      await registerChallengeRoutes(app, {
+        authStore: options.auth.store,
+        challengeStore: options.challenges,
         webOrigin: options.webOrigin
       });
     }
@@ -223,6 +232,57 @@ export async function createApp(options: AppOptions): Promise<FastifyInstance> {
             "409": { description: "An earlier stage must be completed first." }
           }
         },
+        },
+        "/api/v1/challenges": {
+          get: {
+            operationId: "listPublishedChallenges",
+            summary: "List published challenges with their acceptance and rubric criteria",
+            responses: { "200": { description: "Published challenges available to candidates." } }
+          }
+        },
+        "/api/v1/challenges/{challengeId}/attempts": {
+          post: {
+            operationId: "startChallengeAttempt",
+            summary: "Start or resume the candidate's attempt for a published challenge",
+            responses: {
+              "200": { description: "The candidate's attempt." },
+              "401": { description: "Authentication is required." },
+              "404": { description: "The published challenge was not found." }
+            }
+          }
+        },
+        "/api/v1/my/challenge-attempts": {
+          get: {
+            operationId: "listMyChallengeAttempts",
+            summary: "List attempts owned by the authenticated candidate",
+            responses: {
+              "200": { description: "Only the candidate's own attempts." },
+              "401": { description: "Authentication is required." }
+            }
+          }
+        },
+        "/api/v1/my/challenge-attempts/{attemptId}": {
+          patch: {
+            operationId: "saveChallengeDraft",
+            summary: "Save a draft for an in-progress candidate attempt",
+            responses: {
+              "200": { description: "The saved draft." },
+              "401": { description: "Authentication is required." },
+              "404": { description: "The editable attempt was not found for this candidate." }
+            }
+          }
+        },
+        "/api/v1/my/challenge-attempts/{attemptId}/submit": {
+          post: {
+            operationId: "submitChallengeAttempt",
+            summary: "Submit a saved challenge draft",
+            responses: {
+              "200": { description: "The submitted attempt." },
+              "401": { description: "Authentication is required." },
+              "409": { description: "The draft is incomplete or the attempt is no longer editable." }
+            }
+          }
+        },
         "/api/v1/my/evidence": {
           get: {
             operationId: "listMyEvidence",
@@ -256,7 +316,7 @@ export async function createApp(options: AppOptions): Promise<FastifyInstance> {
         }
       }
     }
-  }));
+  ));
 
   return app;
 }
