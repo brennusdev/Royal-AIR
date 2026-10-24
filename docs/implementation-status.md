@@ -91,8 +91,7 @@ O portfólio e as tentativas aceitam declarações e links fornecidos pela próp
 - Testes cobrem entrada HTTP(S), classificação autorrelatada, origem e isolamento entre contas.
 - `npm run lint`: concluído com sucesso após a implementação de desafios.
 - `npm test`: 18 testes passaram após a implementação de desafios; cobertura inclui listagem de critérios, sessão/origem, início, envio, URL e isolamento entre candidatos.
-- `npm run db:validate` e `npm run db:generate`: concluídos com sucesso com uma URL local de exemplo.
-- `npm run typecheck`: inicialmente encontrou um erro de tipagem na leitura da resposta da interface, que foi corrigido; repetir após a correção e registrar o resultado final.
+- `npm run typecheck`, `npm run build`, `npm run db:validate` e `npm run db:generate`: concluídos com sucesso usando uma URL local de exemplo para validação/geração.
 - A migração `20261024120000_challenges_and_attempts` e o seed ainda precisam ser executados em PostgreSQL; Docker e psql não estão instalados neste ambiente.
 
 ## Fases seguintes
