@@ -59,6 +59,17 @@ enum LearningStepStatus {
   studied
 }
 
+enum ChallengeStatus {
+  draft
+  published
+  archived
+}
+
+enum ChallengeAttemptStatus {
+  in_progress
+  submitted
+}
+
 enum EvidenceStatus {
   self_reported
   pending
@@ -86,6 +97,7 @@ model User {
   emailActionTokens  EmailActionToken[]
   learningPlans      CandidateLearningPlan[]
   portfolioEvidence PortfolioEvidence[]
+  challengeAttempts ChallengeAttempt[]
   createdAt          DateTime                @default(now())
   updatedAt          DateTime                @updatedAt
 
@@ -292,4 +304,45 @@ model PortfolioEvidence {
 
   @@index([userId, createdAt])
   @@map("portfolio_evidence")
+}
+
+model ChallengeAttempt {
+  id             String                @id @default(cuid())
+  userId         String
+  challengeId    String
+  challengeVersion Int
+  acceptanceCriteria String[]
+  rubricCriteria String[]
+  status         ChallengeAttemptStatus @default(in_progress)
+  approach       String?               @db.Text
+  submissionUrl  String?
+  startedAt      DateTime              @default(now())
+  submittedAt    DateTime?
+  updatedAt      DateTime              @updatedAt
+  user           User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge      Challenge             @relation(fields: [challengeId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, challengeId])
+  @@index([userId, status, updatedAt])
+  @@map("challenge_attempts")
+}
+
+model Challenge {
+  id                String          @id @default(cuid())
+  slug              String          @unique
+  title             String
+  context           String          @db.Text
+  description       String          @db.Text
+  difficulty        String
+  estimatedMinutes  Int
+  version           Int             @default(1)
+  status            ChallengeStatus @default(draft)
+  acceptanceCriteria String[]
+  rubricCriteria    String[]
+  attempts          ChallengeAttempt[]
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([status, title])
+  @@map("challenges")
 }

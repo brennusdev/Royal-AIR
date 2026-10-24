@@ -96,6 +96,49 @@ const learningPaths = [
   }
 ] as const;
 
+const challenges = [
+  {
+    slug: "documented-task-api",
+    title: "API de tarefas com validação",
+    context: "Uma equipe precisa de um serviço pequeno para organizar tarefas sem depender de uma interface visual.",
+    description: "Descreva como implementaria uma API REST para criar e listar tarefas, incluindo validação e respostas de erro. Envie um link público opcional para a implementação.",
+    difficulty: "fundamentos",
+    estimatedMinutes: 120,
+    version: 1,
+    status: "published" as const,
+    acceptanceCriteria: [
+      "A proposta descreve endpoints e formatos de entrada/saída.",
+      "A validação de dados e os erros esperados estão documentados.",
+      "As decisões e limitações estão explicadas."
+    ],
+    rubricCriteria: [
+      "Correção e clareza da solução proposta.",
+      "Validação e tratamento de erros.",
+      "Organização da explicação e justificativa das decisões."
+    ]
+  },
+  {
+    slug: "responsive-accessible-form",
+    title: "Formulário acessível e responsivo",
+    context: "Um formulário de cadastro precisa funcionar em telas pequenas e ser utilizável por teclado e leitor de tela.",
+    description: "Explique a estrutura semântica e as validações que usaria. Se houver uma demonstração pública, inclua o link.",
+    difficulty: "fundamentos",
+    estimatedMinutes: 90,
+    version: 1,
+    status: "published" as const,
+    acceptanceCriteria: [
+      "Campos têm rótulos programáticos e mensagens de erro associadas.",
+      "O fluxo pode ser operado por teclado com foco visível.",
+      "O layout considera telas estreitas sem perda de conteúdo."
+    ],
+    rubricCriteria: [
+      "Uso de semântica e acessibilidade.",
+      "Comportamento responsivo.",
+      "Validação e clareza das mensagens."
+    ]
+  }
+] as const;
+
 async function seed(): Promise<void> {
   const versions: Array<{ id: string; slug: keyof typeof stageGuidance }> = [];
 
@@ -180,6 +223,22 @@ async function seed(): Promise<void> {
         }
       });
     }
+  }
+
+  for (const challenge of challenges) {
+    await prisma.challenge.upsert({
+      where: { slug: challenge.slug },
+      create: {
+        ...challenge,
+        acceptanceCriteria: [...challenge.acceptanceCriteria],
+        rubricCriteria: [...challenge.rubricCriteria]
+      },
+      update: {
+        ...challenge,
+        acceptanceCriteria: [...challenge.acceptanceCriteria],
+        rubricCriteria: [...challenge.rubricCriteria]
+      }
+    });
   }
 }
 
