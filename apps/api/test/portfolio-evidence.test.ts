@@ -5,8 +5,8 @@ import {
   type AccountRecord,
   type AuthStore,
   type AuthenticatedSession
-} from "../src/auth.js";
-import type { PortfolioEvidenceStore } from "../src/portfolio-evidence.js";
+} from "../src/modules/auth/routes.js";
+import type { PortfolioEvidenceStore } from "../src/modules/portfolio-evidence/routes.js";
 import { createApp } from "../src/app.js";
 
 const webOrigin = "http://localhost:5173";

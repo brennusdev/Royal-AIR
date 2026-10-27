@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AuthPanel from "./AuthPanel.js";
+import AuthPanel from "./features/auth/AuthPanel.js";
 
 type ApiStatus = "checking" | "available" | "unavailable";
 
