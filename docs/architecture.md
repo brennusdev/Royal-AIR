@@ -6,13 +6,30 @@ O produto é uma plataforma de evidências práticas e avaliações para desenvo
 
 ## Componentes
 
-- `apps/web`: React e TypeScript; interface acessível e responsiva.
-- `apps/api`: API REST em Fastify, TypeScript, validação Zod, cabeçalhos de segurança, CORS restrito e limite básico de requisições.
+- `apps/web`: React e TypeScript; `src/features/<domínio>/` agrupa a interface e o comportamento de cada área, enquanto `App.tsx` compõe a experiência e `styles.css` mantém os estilos globais.
+- `apps/api`: API REST em Fastify, TypeScript, validação Zod, cabeçalhos de segurança, CORS restrito e limite básico de requisições. `src/modules/<domínio>/` agrupa rotas e adaptadores Prisma; os arquivos na raiz de `src/` inicializam a aplicação, o servidor e integrações de deploy.
 - `packages/shared`: contratos e regras puras compartilhados entre os aplicativos.
 - `prisma/`: esquema relacional PostgreSQL, migrações e seed de demonstração.
 - `docs/`: modelo, riscos, privacidade e decisões.
 
 A implantação inicial é um monólito modular: uma aplicação web, uma API e um banco PostgreSQL, sem filas ou microserviços prematuros. Arquivos enviados e integrações externas deverão ser encapsulados por interfaces quando essas fases forem implementadas.
+
+### Organização interna da API
+
+Cada módulo de domínio mantém suas rotas e seu adaptador de persistência juntos:
+
+- `apps/api/src/modules/auth/`
+- `apps/api/src/modules/challenges/`
+- `apps/api/src/modules/learning-paths/`
+- `apps/api/src/modules/portfolio-evidence/`
+
+`app.ts` registra os módulos e configura os recursos transversais do Fastify. `platform-runtime.ts` conecta os adaptadores Prisma à aplicação; `server.ts` e `vercel-function.ts` são pontos de entrada distintos para execução local e Vercel. O cliente Prisma gerado permanece em `src/generated/` e não deve ser editado manualmente.
+
+### Organização interna do frontend
+
+`apps/web/src/features/` agrupa a interface por área (`auth`, `challenges`, `learning-paths` e `portfolio-evidence`). `App.tsx` reúne essas áreas na página principal, `main.tsx` inicializa o React e `styles.css` concentra os estilos globais compartilhados.
+
+Os diretórios `Backend/`, `Frontend/` e `BancoDeDados/` pertencem ao protótipo anterior e não são módulos da aplicação React/Fastify. A função serverless em `api/index.ts` é um ponto de entrada ativo da integração com a Vercel; ela permanece na raiz porque `vercel.json` e a configuração de deploy dependem desse caminho.
 
 ## Fluxos principais pretendidos
 
