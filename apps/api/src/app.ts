@@ -4,16 +4,16 @@ import rateLimit from "@fastify/rate-limit";
 import Fastify, { type FastifyInstance } from "fastify";
 import { ZodError } from "zod";
 import { healthResponseSchema } from "@platform/shared";
-import { registerAuthRoutes, type AuthOptions } from "./auth.js";
+import { registerAuthRoutes, type AuthOptions } from "./modules/auth/routes.js";
 import {
   registerLearningPathRoutes,
   type LearningPathStore
-} from "./learning-paths.js";
+} from "./modules/learning-paths/routes.js";
 import {
   registerPortfolioEvidenceRoutes,
   type PortfolioEvidenceStore
-} from "./portfolio-evidence.js";
-import { registerChallengeRoutes, type ChallengeStore } from "./challenges.js";
+} from "./modules/portfolio-evidence/routes.js";
+import { registerChallengeRoutes, type ChallengeStore } from "./modules/challenges/routes.js";
 
 export interface AppOptions {
   webOrigin: string;
