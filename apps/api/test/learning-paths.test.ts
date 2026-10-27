@@ -1,13 +1,13 @@
 import { afterEach, describe, expect, it } from "vitest";
 import type { FastifyInstance } from "fastify";
-import type { AuthStore, AccountRecord, AuthenticatedSession } from "../src/auth.js";
-import { tokenHash } from "../src/auth.js";
+import type { AuthStore, AccountRecord, AuthenticatedSession } from "../src/modules/auth/routes.js";
+import { tokenHash } from "../src/modules/auth/routes.js";
 import {
   buildLearningPlan,
   type LearningPathCatalogItem,
   type LearningPathStore,
   type LearningPlanRecord
-} from "../src/learning-paths.js";
+} from "../src/modules/learning-paths/routes.js";
 import { createApp } from "../src/app.js";
 
 const webOrigin = "http://localhost:5173";

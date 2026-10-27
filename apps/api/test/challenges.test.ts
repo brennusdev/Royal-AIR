@@ -5,12 +5,12 @@ import {
   type AccountRecord,
   type AuthStore,
   type AuthenticatedSession
-} from "../src/auth.js";
+} from "../src/modules/auth/routes.js";
 import {
   type ChallengeAttemptRecord,
   type ChallengeRecord,
   type ChallengeStore
-} from "../src/challenges.js";
+} from "../src/modules/challenges/routes.js";
 import { createApp } from "../src/app.js";
 
 const webOrigin = "http://localhost:5173";
