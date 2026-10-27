@@ -5,7 +5,7 @@ import {
   type AccountRecord,
   type AuthStore,
   type Mailer
-} from "../src/auth.js";
+} from "../src/modules/auth/routes.js";
 import { createApp } from "../src/app.js";
 
 class MemoryAuthStore implements AuthStore {
