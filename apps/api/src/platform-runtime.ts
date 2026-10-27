@@ -5,10 +5,10 @@ import type { PrismaClient } from "./generated/prisma/client.js";
 import { PrismaClient as PrismaClientConstructor } from "./generated/prisma/client.js";
 import { createApp } from "./app.js";
 import type { Environment } from "./config.js";
-import { createPrismaAuthStore } from "./prisma-auth-store.js";
-import { createPrismaLearningPathStore } from "./prisma-learning-path-store.js";
-import { createPrismaPortfolioEvidenceStore } from "./prisma-portfolio-evidence-store.js";
-import { createPrismaChallengeStore } from "./prisma-challenge-store.js";
+import { createPrismaAuthStore } from "./modules/auth/prisma-store.js";
+import { createPrismaLearningPathStore } from "./modules/learning-paths/prisma-store.js";
+import { createPrismaPortfolioEvidenceStore } from "./modules/portfolio-evidence/prisma-store.js";
+import { createPrismaChallengeStore } from "./modules/challenges/prisma-store.js";
 
 export interface PlatformRuntime {
   app: FastifyInstance;
