@@ -1,9 +1,9 @@
-import type { PrismaClient } from "./generated/prisma/client.js";
+import type { PrismaClient } from "../../generated/prisma/client.js";
 import type {
   AccountRecord,
   AuthStore,
   AuthenticatedSession
-} from "./auth.js";
+} from "./routes.js";
 
 const accountInclude = {
   roles: { select: { role: true } },
